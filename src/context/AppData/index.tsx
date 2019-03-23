@@ -18,8 +18,8 @@ const currentAppData = {
   lastTab: defaultTab,
   tab: defaultTab,
   // Idol Page
-  currentIdolType: IdolType.support, // FIXME: to 1
-  currentIdolID: 17,
+  currentIdolType: IdolType.produce,
+  currentIdolID: 1,
   // token: window.localStorage.getItem(LOCAL_STORAGE_TOKEN) || defaultToken,
   // user_name: window.localStorage.getItem(LOCAL_STORAGE_USERNAME) || defaultUserName,
   // user_id: window.localStorage.getItem(LOCAL_STORAGE_USERID) || defaultUserID,
@@ -65,7 +65,7 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
           allIdols: idols,
           supportIdols: idols.s,
           produceIdols: idols.p,
-          tab: GlobalTabs.idol, // FIXME: delete it
+          tab: GlobalTabs.idol,
         })
       }
       ).catch(err =>
