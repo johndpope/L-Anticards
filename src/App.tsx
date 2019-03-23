@@ -21,10 +21,13 @@ import Tab from '@material-ui/core/Tab';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
 
-import { AppDataProvider } from './context/AppData';
+import { AppDataProvider, useAppData } from './context/AppData';
 import { useToggle } from './hooks/gadget';
-import IdolList from './components/IdolList'
+import IdolSearchPage from './components/IdolSearchPage'
 import TeamList from './components/TeamList'
+import IdolPage from './components/IdolPage'
+import { IdolType } from './common/type';
+import { GlobalTabs } from './common/filter';
 
 var classNames = require('classnames');
 
@@ -129,8 +132,8 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const App = withStyles(styles)((props: Props) => {
-  const [typeTab, setTypeTab] = useState('support');
   const [teamDrawerOpen, OpenTeamDrawer, CloseTeamDrawer] = useToggle(false);
+  const { tab, setTab } = useAppData();
 
   const { classes } = props;
   return (
@@ -150,10 +153,11 @@ const App = withStyles(styles)((props: Props) => {
             L'Anticards
           </Typography>
           <Typography color="inherit" className={classes.typeTab}>
-            <Tabs value={typeTab} onChange={(_, value: string) => setTypeTab(value)}>
-              <Tab label="Produce" value='produce' />
-              <Tab label="Support" value='support' />
-              <Tab label="Team" value='team' />
+            <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
+              <Tab label="Produce" value={GlobalTabs.produce} />
+              <Tab label="Support" value={GlobalTabs.support} />
+              <Tab label="Idol" value={GlobalTabs.idol} />
+              <Tab label="Team" value={GlobalTabs.team} />
             </Tabs>
           </Typography>
           <IconButton color="inherit" >
@@ -181,17 +185,23 @@ const App = withStyles(styles)((props: Props) => {
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        {typeTab === "support" &&
+        {tab === 'support' &&
           <Typography variant="h4" gutterBottom component="h2">
-            <IdolList />
+            <IdolSearchPage idolType={IdolType.support} />
           </Typography>
         }
-        {typeTab === "produce" &&
+        {tab === 'produce' &&
           <Typography variant="h4" gutterBottom component="h2">
-            Type: produce
+            <IdolSearchPage idolType={IdolType.produce} />
+          </Typography>
+        }
+        {tab === 'idol' &&
+          <Typography variant="h4" gutterBottom component="h2">
+            {/* <IdolList idolType={IdolType.produce} /> */}
+            <IdolPage/>
             </Typography>
         }
-        {typeTab === "team" &&
+        {tab === 'team' &&
           <Typography variant="h4" gutterBottom component="h2">
             Type: team
             </Typography>

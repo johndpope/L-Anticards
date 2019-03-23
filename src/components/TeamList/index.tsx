@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
-import { avatarUrl, teamInfo, idolData } from '../FetchData'
+import { avatarUrl, teamInfo } from '../FetchData'
 
 const styles = createStyles({
   root: {
@@ -25,7 +25,7 @@ const TeamList: React.FunctionComponent<Props> = (props) => {
   const membersList = teamInfo.map(idol => (
     <ListItem key={idol.boom_id}>
       <ListItemAvatar>
-        <Avatar src={avatarUrl(idol.boom_id)} />
+        <Avatar src={avatarUrl(idol.id)} />
       </ListItemAvatar>
       <ListItemText
         primary={idol.name}
