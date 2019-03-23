@@ -4,10 +4,17 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 
-import { avatarUrl } from '../FetchData';
 import { CardActions } from '@material-ui/core';
 import { useAppData } from '../../context/AppData';
 import { IdolType } from '../../common/type';
+
+function padLeft(text: string, padChar: string, size: number): string {
+  return (String(padChar).repeat(size) + text).substr((size * -1), size);
+}
+
+function avatarUrl(idolID: number): string {
+  return './image/mini/' + padLeft(idolID.toString(), '0', 4) + '.jpg'
+}
 
 const styles = createStyles({
   card: {
