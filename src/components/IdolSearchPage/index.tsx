@@ -25,7 +25,7 @@ import IdolAvatar from '../IdolAvatar';
 // import { IdolView, defaultIdolView, idolViewText } from './view';
 
 import { useAppData } from '../../context/AppData';
-import { SupportIdol, ProduceIdol, IdolType, Strength } from '../../common/type';
+import { SupportIdol, ProduceIdol, IdolType, Strength, membersList, unitsList } from '../../common/type';
 import { IdolView } from '../../common/filter';
 
 
@@ -33,7 +33,21 @@ const styles = createStyles({
   root: {
     width: '97%',
   },
-  filter: {
+  filterToolbar: {
+  },
+  filters: {
+    //margin: theme.spacing.unit,
+    // minWidth: 120,
+    padding: 6,
+  },
+  // strengthControl: {
+  //   //margin: theme.spacing.unit,
+  //   // minWidth: 120,
+  //   padding: 6,
+  // },
+  strengthMenu: {
+    maxHeight: 200,
+    // width: 150,
   },
   idolGrips: {
     //height: 450,
@@ -47,18 +61,6 @@ const styles = createStyles({
   idolListItem: {
     width: '100%',
     height: 330,
-  },
-  viewControl: {
-    //margin: theme.spacing.unit,
-    // minWidth: 120,
-  },
-  strengthControl: {
-    //margin: theme.spacing.unit,
-    // minWidth: 120,
-  },
-  strengthMenu: {
-    maxHeight: 200,
-    // width: 150,
   },
   form: {
     display: 'flex',
@@ -187,7 +189,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
     <AppBar position="static" color="default">
       <Toolbar>
         <Typography variant="h6" color="inherit">
-          <FormControl className={classes.viewControl}>
+          <FormControl className={classes.filters}>
             <InputLabel htmlFor="select-multiple-chip">View</InputLabel>
             <Select value={filter.view} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
               setFilter(idolType, {
@@ -198,7 +200,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
               {Object.values(IdolView).map(v => (<MenuItem value={v}> {v} </MenuItem>))}
             </Select>
           </FormControl>
-          <FormControl className={classes.strengthControl}>
+          <FormControl className={classes.filters}>
             <InputLabel htmlFor="select-multiple-chip">Strength</InputLabel>
             <Select multiple value={filter.strengths}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {                
@@ -222,6 +224,29 @@ const Filter: React.FunctionComponent<Props> = (props) => {
               ))}
             </Select>
           </FormControl>
+          <FormControl className={classes.filters}>
+            <InputLabel htmlFor="select-multiple-chip">Member</InputLabel>
+            <Select value={filter.member} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+              setFilter(idolType, {
+                ...filter,
+                member: event.target.value as typeof filter.member,
+              });
+            }}>
+              {['all', ...membersList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.filters}>
+            <InputLabel htmlFor="select-multiple-chip">Unit</InputLabel>
+            <Select value={filter.unit} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+              setFilter(idolType, {
+                ...filter,
+                unit: event.target.value as typeof filter.unit,
+              });
+            }}>
+              {['all', ...unitsList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+            </Select>
+          </FormControl>
+
         </Typography>
       </Toolbar>
     </AppBar>
@@ -235,9 +260,7 @@ const IdolSearchPage: React.FunctionComponent<Props> = (props) => {
   const filter = appData.getFilter(idolType);
   return (
     <div className={classes.root}>
-      <div className={classes.filter}>
-        <Filter idolType={idolType} classes={classes} />
-      </div>
+      <Filter idolType={idolType} classes={classes} />
       <br />
       {filter.view === IdolView.grip && <IdolGrips idolType={idolType} classes={classes} />}
       {filter.view === IdolView.list && <IdolList idolType={idolType} classes={classes} />}

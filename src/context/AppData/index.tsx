@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 
 import { defaultProduceFilter, defualtSupportFilter, IdolFilter, defaultTab, GlobalTabs } from '../../common/filter';
+import { applySupportFilter, applyProduceFilter } from '../../common/filter';
 import { SupportIdol, AllIdolList, emptyIdolList, ProduceIdol, IdolType } from '../../common/type';
 
 const currentAppData = {
@@ -56,6 +57,16 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
   //   );
   // }
 
+  applyFilter = () => {
+    this.setState((prevState) => {
+      const idols = prevState.allIdols;
+      return {
+        supportIdols: applySupportFilter(idols.s, prevState.supportFilter),
+        produceIdols: applyProduceFilter(idols.p, prevState.produceFilter),
+      }
+    })
+  }
+
   componentDidMount() {
     fetch('./static.json')
       .then(resp => resp.json())
@@ -63,17 +74,15 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
         const idols: AllIdolList = resp;
         this.setState({
           allIdols: idols,
-          supportIdols: idols.s,
-          produceIdols: idols.p,
-          tab: GlobalTabs.idol,
         })
+        this.applyFilter()
       }
       ).catch(err =>
         console.log(err.message)
       );
   }
 
-  componentDidUpdate() { }
+  componentDidUpdate() {}
 
   render() {
     const value = {
@@ -84,6 +93,7 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
         } else {
           this.setState({produceFilter: f}) 
         }
+        this.applyFilter()
       },
       getFilter: (typ: IdolType) => {
         if (typ === IdolType.support) {

@@ -170,7 +170,7 @@ const App = withStyles(styles)((props: Props) => {
 
       <Drawer
         variant="permanent"
-        classes={{paper: classNames(classes.drawerPaper, !teamDrawerOpen && classes.drawerPaperClose)}}
+        classes={{ paper: classNames(classes.drawerPaper, !teamDrawerOpen && classes.drawerPaperClose) }}
         open={teamDrawerOpen}
       >
         <div className={classes.toolbarIcon}>
@@ -186,25 +186,16 @@ const App = withStyles(styles)((props: Props) => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         {tab === 'support' &&
-          <Typography variant="h4" gutterBottom component="h2">
-            <IdolSearchPage idolType={IdolType.support} />
-          </Typography>
+          <IdolSearchPage idolType={IdolType.support} />
         }
         {tab === 'produce' &&
-          <Typography variant="h4" gutterBottom component="h2">
-            <IdolSearchPage idolType={IdolType.produce} />
-          </Typography>
+          <IdolSearchPage idolType={IdolType.produce} />
         }
         {tab === 'idol' &&
-          <Typography variant="h4" gutterBottom component="h2">
-            {/* <IdolList idolType={IdolType.produce} /> */}
-            <IdolPage/>
-            </Typography>
+          <IdolPage />
         }
         {tab === 'team' &&
-          <Typography variant="h4" gutterBottom component="h2">
-            Type: team
-            </Typography>
+          <div>Type: team</div>
         }
       </main>
 

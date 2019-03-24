@@ -3,6 +3,7 @@ export type ProduceIdol = {
   'name': string;
   'rarity': string;
   'idol': string;
+  'unit': string;
   'avail': {
     'date': string;
     'source': string;
@@ -30,6 +31,9 @@ export type ProduceIdol = {
     'effect': string;
     'link': string;
   }[];
+  'meta': {
+    'idol_id': number;
+  }
 }
 
 export type SupportIdol = {
@@ -37,6 +41,7 @@ export type SupportIdol = {
   'name': string;
   'rarity': string;
   'idol': string;
+  'unit': string;
   'avail': {
     'date': string;
     'source_detail': string;
@@ -80,6 +85,9 @@ export type SupportIdol = {
     'get_lv': number[];
     'lv': number[];
   }[];
+  'meta': {
+    'idol_id': number;
+  }
 };
 
 export type AllIdolList = {
@@ -99,3 +107,13 @@ export enum Strength {
   da = 'da',
   vi = 'vi'
 }
+
+const tuple = <T extends string[]>(...args: T) => args;
+export const membersList = tuple('櫻木真乃', '風野灯織', '八宮めぐる',
+                                '月岡恋鐘', '田中摩美々', '白瀬咲耶', '三峰結華', '幽谷霧子',
+                                '小宮果穂', '園田智代子', '西城樹里', '杜野凛世', '有栖川夏葉',
+                                '大崎甘奈', '大崎甜花', '桑山千雪');
+export const unitsList = tuple('イルミネーションスターズ', 'アンティーカ', '放課後クライマックスガールズ', 'アルストロメリア');
+
+export type MemberType = typeof membersList[number];
+export type UnitType = typeof unitsList[number];

@@ -23,28 +23,28 @@ const styles = createStyles({
   },
   basicInfo: {
     float: 'left',
-    width: '40%',
+    width: '60%',
     // marginTop: ,
     overflowX: 'auto',
   },
   liveSkillInfo: {
-    width: '70%',
+    width: '90%',
     margin: '1%',
   },
   passiveSkillInfo: {
-    width: '70%',
+    width: '90%',
     margin: '1%',
   },
   otherSkillInfo: {
-    width: '70%',
+    width: '90%',
     margin: '1%',
   },
   omoideInfo: {
-    width: '70%',
+    width: '90%',
     margin: '1%',
   },
   supportSkillInfo: {
-    width: '80%',
+    width: '90%',
     margin: '1%',
   },
   supportSkillLevelCol: {
@@ -123,7 +123,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ""}</TableCell>
+                  <TableCell>{s.condition || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -150,7 +150,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                   <TableCell>{s.condition}</TableCell>
                   <TableCell>{s.probability}%</TableCell>
                   <TableCell>{s.max_time}回</TableCell>
-                  <TableCell>{s.obtain || ""}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -174,7 +174,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ""}</TableCell>
+                  <TableCell>{s.condition || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -204,7 +204,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                   <TableCell>{s.effect}</TableCell>
                   {parseSupportSkillList(s.get_lv, s.lv).map(x => (
                     <TableCell align="center" padding="none" className={classes.supportSkillLevelCol}>
-                      {x > 0 ? x : ""}
+                      {x > 0 ? x : ''}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -266,7 +266,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.link}</TableCell>
-                  <TableCell>{s.condition || ""}</TableCell>
+                  <TableCell>{s.condition || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -293,7 +293,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                   <TableCell>{s.condition}</TableCell>
                   <TableCell>{s.probability}%</TableCell>
                   <TableCell>{s.max_time}回</TableCell>
-                  <TableCell>{s.obtain || ""}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -317,7 +317,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ""}</TableCell>
+                  <TableCell>{s.condition || ''}</TableCell>
                 </TableRow>
               ))
               }
