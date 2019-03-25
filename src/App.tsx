@@ -151,7 +151,7 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
           </IconButton> */}
         <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
           {'L\'Anticards'}
-          </Typography>
+        </Typography>
         <Typography color="inherit" className={classes.typeTab}>
           <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
             <Tab label="Produce" value={GlobalTabs.produce} />
@@ -185,10 +185,19 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
   );
 });
 
-const ContentContainer = withStyles(styles)((props: Props & { IdolPageRef: React.RefObject<HTMLDivElement> }) => {
+const IntroPage = ()  => {
+  return (
+    <div></div>
+  )
+}
+
+const ContentContainer = withStyles(styles)((props: Props) => {
   const { tab } = useAppData();
   return (
     <div>
+      {tab === 'intro' &&
+        <IntroPage />
+      }
       {tab === 'support' &&
         <IdolSearchPage idolType={IdolType.support} />
       }
@@ -196,9 +205,7 @@ const ContentContainer = withStyles(styles)((props: Props & { IdolPageRef: React
         <IdolSearchPage idolType={IdolType.produce} />
       }
       {tab === 'idol' &&
-        <div ref={props.IdolPageRef}>
-          <IdolPage />
-        </div>
+        <IdolPage />
       }
       {tab === 'team' &&
         <div>Type: team</div>
@@ -209,7 +216,6 @@ const ContentContainer = withStyles(styles)((props: Props & { IdolPageRef: React
 
 const App = withStyles(styles)((props: Props) => {
   const mainRef: React.RefObject<HTMLMainElement> = React.createRef<HTMLMainElement>();
-  const idolPageRef = React.createRef<HTMLDivElement>();
   const mainScrollToTop = () => {
     if (mainRef.current != null) { mainRef.current.scrollTo(0, 0); }
   };
@@ -222,7 +228,7 @@ const App = withStyles(styles)((props: Props) => {
         <AppBarWithTeamInfo classes={classes} />
         <main className={classes.content} ref={mainRef}>
           <div className={classes.appBarSpacer} />
-          <ContentContainer classes={classes} IdolPageRef={idolPageRef} />
+          <ContentContainer classes={classes} />
         </main>
       </div>
     </AppDataProvider>

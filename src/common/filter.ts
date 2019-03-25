@@ -9,6 +9,7 @@ export const GlobalTabs = {
   produce: 'produce',
   idol: 'idol',
   team: 'team',
+  intro: 'intro',
 }
 
 export const defaultTab = GlobalTabs.produce;

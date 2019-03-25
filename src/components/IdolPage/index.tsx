@@ -3,8 +3,6 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 
@@ -39,6 +37,10 @@ const styles = createStyles({
     width: '90%',
     margin: '1%',
   },
+  eventsInfo: {
+    width: '90%',
+    margin: '1%',
+  },
   omoideInfo: {
     width: '90%',
     margin: '1%',
@@ -61,21 +63,22 @@ const supportSkillLevels = [50, 55, 60, 65, 70, 75, 80];
 
 const parseSupportSkillList = (get_lv: number[], lv: number[]) => {
   const s = get_lv.reduce((acc, x, index) => (Math.max(acc, x <= supportSkillLevels[0] ? lv[index] : 0)), 0)
-  return supportSkillLevels.slice(1).reduce((acc, cur, index) => acc.concat(
+  return supportSkillLevels.slice(1).reduce((acc, cur) => acc.concat(
     lv[get_lv.findIndex(x => x == cur)] || 0
   ), [s])
 };
+
+const positiveOrEmpty = (t: number) => {
+  return (t == 0) ? "" : t;
+}
 
 const IdolPage: React.FunctionComponent<Props> = (props) => {
   const { currentIdolType, currentIdolID, allIdols } = useAppData();
 
   const { classes } = props;
-  const idol = ((currentIdolType == IdolType.support)
-    ? allIdols.s.find(x => x.id == currentIdolID)
-    : allIdols.p.find(x => x.id == currentIdolID)
-  ) || allIdols.p[0];
   if (currentIdolType == IdolType.support) {
     const idol = allIdols.s.find(x => x.id == currentIdolID) || allIdols.s[0];
+    // TODO: refactor these ugly codes with array.map
     return (
       <div>
         <div className={classes.topInfo}>
@@ -178,6 +181,43 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 </TableRow>
               ))
               }
+            </TableBody>
+          </Table>
+        </Paper>
+
+        <Paper className={classes.eventsInfo}>
+          <Table>
+            <TableHead>
+              <TableRow><TableCell align="center" colSpan={6}>事件</TableCell></TableRow>
+              <TableRow>
+                <TableCell align="left">事件名</TableCell>
+                <TableCell align="left">Vocal</TableCell>
+                <TableCell align="left">Dance</TableCell>
+                <TableCell align="left">Visual</TableCell>
+                <TableCell align="left">Mental</TableCell>
+                <TableCell align="left">SP</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {idol.events.map((s, index) => (
+                <TableRow key={index}>
+                  <TableCell>{s.name}</TableCell>
+                  <TableCell>{s.vo || ""}</TableCell>
+                  <TableCell>{s.da || ''}</TableCell>
+                  <TableCell>{s.vi || ''}</TableCell>
+                  <TableCell>{s.mental || ''}</TableCell>
+                  <TableCell>{s.sp || ''}</TableCell>
+                </TableRow>
+              ))
+              }
+              <TableRow key={'sumup'}>
+                <TableCell>{'合计'}</TableCell>
+                <TableCell>{positiveOrEmpty(idol.meta.events_sum.vo)}</TableCell>
+                <TableCell>{positiveOrEmpty(idol.meta.events_sum.da)}</TableCell>
+                <TableCell>{positiveOrEmpty(idol.meta.events_sum.vi)}</TableCell>
+                <TableCell>{positiveOrEmpty(idol.meta.events_sum.mental)}</TableCell>
+                <TableCell>{positiveOrEmpty(idol.meta.events_sum.sp)}</TableCell>                
+              </TableRow>
             </TableBody>
           </Table>
         </Paper>

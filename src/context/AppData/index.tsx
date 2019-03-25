@@ -41,7 +41,7 @@ interface AppDataContentProps {
   mainScrollToTop: () => void,
 }
 
-export class AppDataProvider extends React.Component<AppDataContentProps, AppData> {
+export class AppDataProvider extends React.PureComponent<AppDataContentProps, AppData> {
   state: Readonly<AppData> = currentAppData;
 
   // componentDidMount() {

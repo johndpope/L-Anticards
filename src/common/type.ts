@@ -62,6 +62,7 @@ export type SupportIdol = {
     'name': string;
     'vo'?: number;
     'da'?: number;
+    'vi'?: number;
     'mental'?: number;
     'sp'?: number;
   }[];
@@ -93,6 +94,13 @@ export type SupportIdol = {
     'strengths': string[];
     'live_skills': LiveSkillMeta[],
     'passive_skills': PassiveSkillMeta[],
+    'events_sum': {
+      'vo': number,
+      'da': number,
+      'vi': number,
+      'mental': number,
+      'sp': number,
+    },
   }
 };
 
