@@ -32,7 +32,7 @@ export const defualtSupportFilter: IdolFilter = defaultProduceFilter;
 
 export const applySupportFilter = (idols: SupportIdol[], filter: IdolFilter) => {
   if (filter.member != 'all') idols = idols.filter((v) => v.idol == filter.member);
-  if (filter.unit != 'all') idols = idols.filter((v) => v.idol == filter.unit);
+  if (filter.unit != 'all') idols = idols.filter((v) => v.unit == filter.unit);
   return idols.sort(defaultCmp)
 }
 
