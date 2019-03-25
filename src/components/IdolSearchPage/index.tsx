@@ -19,12 +19,22 @@ import TableCell from '@material-ui/core/TableCell';
 import TableFooter from '@material-ui/core/TableFooter';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import IdolAvatar from '../IdolAvatar';
 
 import { useAppData } from '../../context/AppData';
-import { IdolType, Strength, membersList, unitsList, strengthsList } from '../../common/type';
+import { IdolType, Strength, membersList, unitsList, strengthsList, liveSkillsList, passiveSkillList } from '../../common/type';
 import { IdolView } from '../../common/filter';
+import { useToggle } from '../../hooks/gadget';
+import { liveSkillText, passiveSkillText } from '../../common/text';
 
 
 const styles = createStyles({
@@ -37,6 +47,18 @@ const styles = createStyles({
     //margin: theme.spacing.unit,
     // minWidth: 120,
     padding: 6,
+  },
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    // margin: theme.spacing.unit,
+    minWidth: 120,
+  },
+  liveSkillGroup: {
+    maxWidth: 400,
+    maxHeight: 400,
   },
   // strengthControl: {
   //   //margin: theme.spacing.unit,
@@ -178,81 +200,138 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
 }
 
 const Filter: React.FunctionComponent<Props> = (props) => {
+  const [liveSkillSelectOpen, openLiveSkillSelect, closeLiveSkillSelect] = useToggle(false);
+  const [passiveSkillSelectOpen, openPassiveSkillSelect, closePassiveSkillSelect] = useToggle(false);
   const appData = useAppData();
-  
+  // const [age, setAge] = useState("age");
+
   const { classes, idolType } = props;
-  const { getFilter, setFilter } = appData;
+  const { getFilter, setFilter, resetFilter } = appData;
   const filter = getFilter(idolType);
   return (
-    <AppBar position="static" color="default">
-      <Toolbar>
-        <Typography variant="h6" color="inherit">
-          <FormControl className={classes.filters}>
-            <InputLabel htmlFor="select-multiple-chip">View</InputLabel>
-            <Select value={filter.view} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setFilter(idolType, {
-                ...filter,
-                view: event.target.value,
-              });
-            }}>
-              {Object.values(IdolView).map(v => (<MenuItem value={v}> {v} </MenuItem>))}
-            </Select>
-          </FormControl>
-          {
-            // Strengths filter, only for support cards
-            idolType == IdolType.support &&
+    <>
+      <AppBar position="static" color="default">
+        <Toolbar>
+          <Typography variant="h6" color="inherit">
             <FormControl className={classes.filters}>
-            <InputLabel htmlFor="select-multiple-chip">Strength</InputLabel>
-            <Select multiple value={filter.strengths}
-              onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {                
+              <InputLabel htmlFor="select-multiple-chip">View</InputLabel>
+              <Select value={filter.view} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setFilter(idolType, {
                   ...filter,
-                  strengths: event.target.value as any as Strength[],
+                  view: event.target.value,
                 });
-              }}
-              input={<Input id="select-multiple-chip" />}
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {filter.strengths.map(value => (
-                    <Chip key={value} label={value} className={classes.chip} />
+              }}>
+                {Object.values(IdolView).map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+              </Select>
+            </FormControl>
+            {idolType == IdolType.support &&
+              // Strengths filter, only for support cards
+              <FormControl className={classes.filters}>
+                <InputLabel htmlFor="select-multiple-chip">Strength</InputLabel>
+                <Select multiple value={filter.strengths}
+                  onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                    setFilter(idolType, {
+                      ...filter,
+                      strengths: event.target.value as any as Strength[],
+                    });
+                  }}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {filter.strengths.map(value => (
+                        <Chip key={value} label={value} className={classes.chip} />
+                      ))}
+                    </div>
+                  )}
+                // MenuProps={MenuProps}
+                >
+                  {strengthsList.map(s => (
+                    <MenuItem key={s} value={s} > {s} </MenuItem>
                   ))}
-                </div>
-              )}
-            // MenuProps={MenuProps}
-            >
-              {strengthsList.map(s => (
-                <MenuItem key={s} value={s} > {s} </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          }
+                </Select>
+              </FormControl>
+            }
 
-          <FormControl className={classes.filters}>
-            <InputLabel htmlFor="select-multiple-chip">Member</InputLabel>
-            <Select value={filter.member} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setFilter(idolType, {
-                ...filter,
-                member: event.target.value as typeof filter.member,
-              });
-            }}>
-              {['all', ...membersList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
-            </Select>
-          </FormControl>
-          <FormControl className={classes.filters}>
-            <InputLabel htmlFor="select-multiple-chip">Unit</InputLabel>
-            <Select value={filter.unit} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              setFilter(idolType, {
-                ...filter,
-                unit: event.target.value as typeof filter.unit,
-              });
-            }}>
-              {['all', ...unitsList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
-            </Select>
-          </FormControl>
-
-        </Typography>
-      </Toolbar>
-    </AppBar>
+            <FormControl className={classes.filters}>
+              <InputLabel htmlFor="select-multiple-chip">Member</InputLabel>
+              <Select value={filter.member} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                setFilter(idolType, {
+                  ...filter,
+                  member: event.target.value as typeof filter.member,
+                });
+              }}>
+                {['all', ...membersList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+              </Select>
+            </FormControl>
+            <FormControl className={classes.filters}>
+              <InputLabel htmlFor="select-multiple-chip">Unit</InputLabel>
+              <Select value={filter.unit} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
+                setFilter(idolType, {
+                  ...filter,
+                  unit: event.target.value as typeof filter.unit,
+                });
+              }}>
+                {['all', ...unitsList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+              </Select>
+            </FormControl>
+            <Button onClick={openLiveSkillSelect} className={classes.filters}>主动技能</Button>
+            <Button onClick={openPassiveSkillSelect} className={classes.filters}>被动技能</Button>
+            <Button onClick={() => resetFilter(idolType)} className={classes.filters}>重置</Button>
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Dialog
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth='md'
+        fullWidth={true}
+        open={liveSkillSelectOpen}
+        onClose={closeLiveSkillSelect}
+      >
+        <DialogTitle>神说要有主动技能</DialogTitle>
+        <DialogContent>
+          <RadioGroup
+            value={filter.liveSkill}
+            className={classes.liveSkillGroup}
+            onChange={(e, value) => setFilter(idolType, { ...filter, liveSkill: value as typeof filter.liveSkill })}
+          >
+            {['none', ...liveSkillsList].map((s) =>
+              <FormControlLabel value={s} control={<Radio />} label={liveSkillText(s as typeof filter.liveSkill)} />)
+            }
+          </RadioGroup>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeLiveSkillSelect} color="primary">OK</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth='md'
+        fullWidth={true}
+        open={passiveSkillSelectOpen}
+        onClose={closePassiveSkillSelect}
+      >
+        <DialogTitle>神说也要有被动技能</DialogTitle>
+        <DialogContent>
+          <RadioGroup
+            value={filter.passiveSkill}
+            className={classes.liveSkillGroup}
+            onChange={(e, value) => setFilter(idolType, {
+              ...filter,
+              passiveSkill: value as typeof filter.passiveSkill,
+            })}
+          >
+            {['none', ...passiveSkillList].map((s) =>
+              <FormControlLabel value={s} control={<Radio />} label={passiveSkillText(s as typeof filter.passiveSkill)} />)
+            }
+          </RadioGroup>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closePassiveSkillSelect} color="primary">OK</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 

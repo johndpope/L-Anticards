@@ -184,11 +184,11 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
 
         <Paper className={classes.supportSkillInfo}>
           <Table>
-            <TableHead style={{tableLayout: 'fixed'}}>
+            <TableHead style={{ tableLayout: 'fixed' }}>
               <TableRow><TableCell align="center" colSpan={2 + supportSkillLevels.length}>
                 支援技能 サポートスキル
               </TableCell></TableRow>
-              <TableRow style={{width: '10%'}}>
+              <TableRow style={{ width: '10%' }}>
                 <TableCell align="left">技能</TableCell>
                 <TableCell align="left">技能效果</TableCell>
                 {/* <TableCell align="left">取得Lv/スキルLv</TableCell> */}

@@ -131,46 +131,43 @@ const styles = (theme: Theme) => createStyles({
 interface Props extends WithStyles<typeof styles> {
 }
 
-const App = withStyles(styles)((props: Props) => {
-  const [teamDrawerOpen, OpenTeamDrawer, CloseTeamDrawer] = useToggle(false);
+const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
   const { tab, setTab } = useAppData();
+  const [teamDrawerOpen, OpenTeamDrawer, CloseTeamDrawer] = useToggle(false);
 
   const { classes } = props;
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute"
-        className={classNames(classes.appBar, teamDrawerOpen && classes.appBarShift)}
-      >
-        <Toolbar disableGutters={!teamDrawerOpen} className={classes.toolbar}>
-          <div className={classes.menuButton}></div>
-          {/* TODO:
+    <AppBar position="absolute"
+      className={classNames(classes.appBar, teamDrawerOpen && classes.appBarShift)}
+    >
+      <Toolbar disableGutters={!teamDrawerOpen} className={classes.toolbar}>
+        <div className={classes.menuButton}></div>
+        {/* TODO:
           <IconButton color="inherit" aria-label="Open drawer"
             onClick={OpenTeamDrawer}
             className={classNames(classes.menuButton, teamDrawerOpen && classes.menuButtonHidden)}
           >
             <MenuIcon />
           </IconButton> */}
-          <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
-            L'Anticards
+        <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
+          L'Anticards
           </Typography>
-          <Typography color="inherit" className={classes.typeTab}>
-            <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
-              <Tab label="Produce" value={GlobalTabs.produce} />
-              <Tab label="Support" value={GlobalTabs.support} />
-              <Tab label="Idol" value={GlobalTabs.idol} />
-              {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
-            </Tabs>
-          </Typography>
-          <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank'>
-            <Badge badgeContent={null} color="secondary">
-              <LocalParkingIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-
-      {/* TODO:
+        <Typography color="inherit" className={classes.typeTab}>
+          <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
+            <Tab label="Produce" value={GlobalTabs.produce} />
+            <Tab label="Support" value={GlobalTabs.support} />
+            <Tab label="Idol" value={GlobalTabs.idol} />
+            {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
+          </Tabs>
+        </Typography>
+        <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank'>
+          <Badge badgeContent={null} color="secondary">
+            <LocalParkingIcon />
+          </Badge>
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+    /* TODO:
       <Drawer
         variant="permanent"
         classes={{ paper: classNames(classes.drawerPaper, !teamDrawerOpen && classes.drawerPaperClose) }}
@@ -184,32 +181,56 @@ const App = withStyles(styles)((props: Props) => {
         </div>
         <Divider />
         <TeamList />
-      </Drawer> */}
+      </Drawer> */
+  );
+});
 
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        {tab === 'support' &&
-          <IdolSearchPage idolType={IdolType.support} />
-        }
-        {tab === 'produce' &&
-          <IdolSearchPage idolType={IdolType.produce} />
-        }
-        {tab === 'idol' &&
+const ContentContainer = withStyles(styles)((props: Props & { IdolPageRef: React.RefObject<HTMLDivElement> }) => {
+  const { tab } = useAppData();
+  return (
+    <div>
+      {tab === 'support' &&
+        <IdolSearchPage idolType={IdolType.support} />
+      }
+      {tab === 'produce' &&
+        <IdolSearchPage idolType={IdolType.produce} />
+      }
+      {tab === 'idol' &&
+        <div ref={props.IdolPageRef}>
           <IdolPage />
-        }
-        {tab === 'team' &&
-          <div>Type: team</div>
-        }
-      </main>
-
+        </div>
+      }
+      {tab === 'team' &&
+        <div>Type: team</div>
+      }
     </div>
+  )
+});
+
+const App = withStyles(styles)((props: Props) => {
+  const mainRef: React.RefObject<HTMLMainElement> = React.createRef<HTMLMainElement>();
+  const idolPageRef = React.createRef<HTMLDivElement>();
+  const mainScrollToTop = () => {
+    if (mainRef.current != null) { mainRef.current.scrollTo(0, 0); }
+  };
+
+  const { classes } = props;
+  return (
+    <AppDataProvider mainScrollToTop={mainScrollToTop}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBarWithTeamInfo classes={classes} />
+        <main className={classes.content} ref={mainRef}>
+          <div className={classes.appBarSpacer} />
+          <ContentContainer classes={classes} IdolPageRef={idolPageRef} />
+        </main>
+      </div>
+    </AppDataProvider>
   );
 });
 
 export default () => (
   <MuiThemeProvider theme={anticaTheme}>
-    <AppDataProvider>
-      <App />
-    </AppDataProvider>
+    <App />
   </MuiThemeProvider>
 );

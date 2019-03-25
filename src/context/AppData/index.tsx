@@ -31,13 +31,17 @@ const appDataOperator = {
   ...currentAppData,
   setFilter: (typ: IdolType, f: IdolFilter) => { },
   getFilter: (typ: IdolType) => { return defualtSupportFilter },
-  gotoIdolPage: (typ: IdolType, id: number) => {},
-  setTab: (v: string) => {},
+  gotoIdolPage: (typ: IdolType, id: number) => { },
+  setTab: (v: string) => { },
+  resetFilter: (typ: IdolType) => { },
 }
 
 const AppDataContext = React.createContext(appDataOperator);
+interface AppDataContentProps {
+  mainScrollToTop: () => void,
+}
 
-export class AppDataProvider extends React.PureComponent<{}, AppData> {
+export class AppDataProvider extends React.Component<AppDataContentProps, AppData> {
   state: Readonly<AppData> = currentAppData;
 
   // componentDidMount() {
@@ -82,16 +86,14 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
       );
   }
 
-  componentDidUpdate() {}
-
   render() {
     const value = {
       ...this.state,
       setFilter: (typ: IdolType, f: IdolFilter) => {
         if (typ === IdolType.support) {
-          this.setState({supportFilter: f}) 
+          this.setState({ supportFilter: f })
         } else {
-          this.setState({produceFilter: f}) 
+          this.setState({ produceFilter: f })
         }
         this.applyFilter()
       },
@@ -108,7 +110,8 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
           currentIdolID: id,
           tab: GlobalTabs.idol,
           lastTab: prevState.tab,
-        }))
+        }));
+        this.props.mainScrollToTop();
       },
       setTab: (v: string) => {
         this.setState((prevState) => ({
@@ -116,6 +119,14 @@ export class AppDataProvider extends React.PureComponent<{}, AppData> {
           lastTab: prevState.tab,
         }))
       },
+      resetFilter: (typ: IdolType) => {
+        if (typ === IdolType.support) {
+          this.setState({ supportFilter: defualtSupportFilter })
+        } else {
+          this.setState({ produceFilter: defaultProduceFilter })
+        }
+        this.applyFilter()
+      }
     };
     return (
       <AppDataContext.Provider value={value}>
