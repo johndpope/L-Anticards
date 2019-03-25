@@ -87,7 +87,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell component="th"><strong>卡明</strong></TableCell>
+                  <TableCell component="th"><strong>卡名</strong></TableCell>
                   <TableCell align="right">{idol.name}</TableCell>
                 </TableRow>
                 <TableRow>
