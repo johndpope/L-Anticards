@@ -119,8 +119,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.live_skills.map(s => (
-                <TableRow>
+              {idol.live_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.obtain || ''}</TableCell>
@@ -144,8 +144,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.passive_skills.map(s => (
-                <TableRow>
+              {idol.passive_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.condition}</TableCell>
                   <TableCell>{s.probability}%</TableCell>
@@ -170,8 +170,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.other_skills.map(s => (
-                <TableRow>
+              {idol.other_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.obtain || ''}</TableCell>
@@ -192,18 +192,20 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableCell align="left">技能</TableCell>
                 <TableCell align="left">技能效果</TableCell>
                 {/* <TableCell align="left">取得Lv/スキルLv</TableCell> */}
-                {supportSkillLevels.map(x => (
-                  <TableCell align="center" padding="none" className={classes.supportSkillLevelCol}>{x}</TableCell>
+                {supportSkillLevels.map((x, index) => (
+                  <TableCell align="center" padding="none" className={classes.supportSkillLevelCol} key={index}>
+                    {x}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.support_skills.map((s) => (
-                <TableRow>
+              {idol.support_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  {parseSupportSkillList(s.get_lv, s.lv).map(x => (
-                    <TableCell align="center" padding="none" className={classes.supportSkillLevelCol}>
+                  {parseSupportSkillList(s.get_lv, s.lv).map((x, index) => (
+                    <TableCell align="center" padding="none" className={classes.supportSkillLevelCol} key={index}>
                       {x > 0 ? x : ''}
                     </TableCell>
                   ))}
@@ -261,8 +263,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.live_skills.map(s => (
-                <TableRow>
+              {idol.live_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.link}</TableCell>
@@ -287,8 +289,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.passive_skills.map(s => (
-                <TableRow>
+              {idol.passive_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.condition}</TableCell>
                   <TableCell>{s.probability}%</TableCell>
@@ -313,8 +315,8 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {idol.other_skills.map(s => (
-                <TableRow>
+              {idol.other_skills.map((s, index) => (
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.obtain || ''}</TableCell>
@@ -337,7 +339,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
             </TableHead>
             <TableBody>
               {idol.omoide.map((s, index) => (
-                <TableRow>
+                <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.link}</TableCell>

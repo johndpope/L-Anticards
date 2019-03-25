@@ -40,7 +40,6 @@ const listIntersect = <T>(a: T[], b: T[]) => {
 }
 
 const liveSkillSelector = (skills: LiveSkillMeta[], filter: LiveSkill) => {
-  console.log(skills)
   return [...skills.map(s => s.effect).flat(), ...skills.map(s => s.link).flat(),]
     .filter((s => {
       return s != undefined && s.action == filter
@@ -48,7 +47,6 @@ const liveSkillSelector = (skills: LiveSkillMeta[], filter: LiveSkill) => {
 }
 
 const passiveSkillSelector = (skills: PassiveSkillMeta[], filter: PassiveSkill) => {
-  console.log(skills)
   return skills.map(s => s.effect).flat()
     .filter((s => {
       return s != undefined && s.action == filter

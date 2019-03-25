@@ -152,7 +152,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map(s => (<TableRow>{s.effect}</TableRow>))}
+                {idol.live_skills.map((s, index) => (<TableRow key={index}>{s.effect}</TableRow>))}
               </TableCell>
             </TableRow>
           ))
@@ -168,7 +168,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map(s => (<TableRow>{s.effect}</TableRow>))}
+                {idol.live_skills.map((s, index) => (<TableRow key={index}>{s.effect}</TableRow>))}
               </TableCell>
             </TableRow>
           ))
@@ -221,7 +221,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
                   view: event.target.value,
                 });
               }}>
-                {Object.values(IdolView).map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+                {Object.values(IdolView).map((v, index) => (<MenuItem value={v} key={index}> {v} </MenuItem>))}
               </Select>
             </FormControl>
             {idolType == IdolType.support &&
@@ -260,7 +260,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
                   member: event.target.value as typeof filter.member,
                 });
               }}>
-                {['all', ...membersList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+                {['all', ...membersList].map((v, index) => (<MenuItem value={v} key={index}> {v} </MenuItem>))}
               </Select>
             </FormControl>
             <FormControl className={classes.filters}>
@@ -271,7 +271,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
                   unit: event.target.value as typeof filter.unit,
                 });
               }}>
-                {['all', ...unitsList].map(v => (<MenuItem value={v}> {v} </MenuItem>))}
+                {['all', ...unitsList].map((v, index) => (<MenuItem value={v} key={index}> {v} </MenuItem>))}
               </Select>
             </FormControl>
             <Button onClick={openLiveSkillSelect} className={classes.filters}>主动技能</Button>
@@ -295,8 +295,9 @@ const Filter: React.FunctionComponent<Props> = (props) => {
             className={classes.liveSkillGroup}
             onChange={(e, value) => setFilter(idolType, { ...filter, liveSkill: value as typeof filter.liveSkill })}
           >
-            {['none', ...liveSkillsList].map((s) =>
-              <FormControlLabel value={s} control={<Radio />} label={liveSkillText(s as typeof filter.liveSkill)} />)
+            {['none', ...liveSkillsList].map((s, index) =>
+              <FormControlLabel value={s} control={<Radio />} key={index}
+              label={liveSkillText(s as typeof filter.liveSkill)} />)
             }
           </RadioGroup>
         </DialogContent>
@@ -322,8 +323,9 @@ const Filter: React.FunctionComponent<Props> = (props) => {
               passiveSkill: value as typeof filter.passiveSkill,
             })}
           >
-            {['none', ...passiveSkillList].map((s) =>
-              <FormControlLabel value={s} control={<Radio />} label={passiveSkillText(s as typeof filter.passiveSkill)} />)
+            {['none', ...passiveSkillList].map((s, index) =>
+              <FormControlLabel value={s} control={<Radio />} key={index}
+              label={passiveSkillText(s as typeof filter.passiveSkill)} />)
             }
           </RadioGroup>
         </DialogContent>

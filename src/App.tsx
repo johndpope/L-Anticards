@@ -150,7 +150,7 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
             <MenuIcon />
           </IconButton> */}
         <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
-          L'Anticards
+          {'L\'Anticards'}
           </Typography>
         <Typography color="inherit" className={classes.typeTab}>
           <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>

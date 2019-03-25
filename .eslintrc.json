@@ -39,7 +39,6 @@
     ],
     "rules": {
         "no-tabs": 2,
-        "no-console": "off",
         "react/display-name": "off",
         "react/prop-types": "off",
         "no-unused-vars": "off",

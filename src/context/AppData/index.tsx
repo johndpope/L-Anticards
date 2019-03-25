@@ -82,7 +82,7 @@ export class AppDataProvider extends React.Component<AppDataContentProps, AppDat
         this.applyFilter()
       }
       ).catch(err =>
-        console.log(err.message)
+        console.log(err.message) // eslint-disable-line no-console
       );
   }
 
