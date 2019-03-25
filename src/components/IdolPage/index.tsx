@@ -87,15 +87,15 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell component="th"><strong>カード</strong></TableCell>
+                  <TableCell component="th"><strong>卡明</strong></TableCell>
                   <TableCell align="right">{idol.name}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th"><strong>レア度</strong></TableCell>
+                  <TableCell component="th"><strong>稀有度</strong></TableCell>
                   <TableCell align="right">{idol.rarity}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th"><strong>実装日</strong></TableCell>
+                  <TableCell component="th"><strong>实装日</strong></TableCell>
                   <TableCell align="right">{idol.avail.date}</TableCell>
                 </TableRow>
                 <TableRow>
@@ -111,11 +111,11 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.liveSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>ライブスキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={3}>主动技能 ライブスキル</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
-                <TableCell align="left">効果</TableCell>
-                <TableCell align="left">開放条件</TableCell>
+                <TableCell align="left">技能名</TableCell>
+                <TableCell align="left">效果</TableCell>
+                <TableCell align="left">开放条件</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -123,7 +123,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ''}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -134,13 +134,13 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.passiveSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={5}>パッシブスキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={5}>被动技能 パッシブスキル</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
+                <TableCell align="left">效果</TableCell>
                 <TableCell align="left">条件</TableCell>
-                <TableCell align="left">確率</TableCell>
+                <TableCell align="left">发动概率</TableCell>
                 <TableCell align="left">最大</TableCell>
-                <TableCell align="left">開放条件</TableCell>
+                <TableCell align="left">开放条件</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -162,10 +162,10 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.otherSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>その他スキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={3}>其它技能</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
-                <TableCell align="left">効果</TableCell>
+                <TableCell align="left">技能名</TableCell>
+                <TableCell align="left">效果</TableCell>
                 <TableCell align="left">条件</TableCell>
               </TableRow>
             </TableHead>
@@ -174,7 +174,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ''}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -186,11 +186,11 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
           <Table>
             <TableHead style={{tableLayout: 'fixed'}}>
               <TableRow><TableCell align="center" colSpan={2 + supportSkillLevels.length}>
-                サポートスキル
+                支援技能 サポートスキル
               </TableCell></TableRow>
               <TableRow style={{width: '10%'}}>
-                <TableCell align="left">スキル</TableCell>
-                <TableCell align="left">スキル効果</TableCell>
+                <TableCell align="left">技能</TableCell>
+                <TableCell align="left">技能效果</TableCell>
                 {/* <TableCell align="left">取得Lv/スキルLv</TableCell> */}
                 {supportSkillLevels.map(x => (
                   <TableCell align="center" padding="none" className={classes.supportSkillLevelCol}>{x}</TableCell>
@@ -228,15 +228,15 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
             <Table>
               <TableBody>
                 <TableRow>
-                  <TableCell component="th"><strong>カード</strong></TableCell>
+                  <TableCell component="th"><strong>卡名</strong></TableCell>
                   <TableCell align="right">{idol.name}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th"><strong>レア度</strong></TableCell>
+                  <TableCell component="th"><strong>稀有度</strong></TableCell>
                   <TableCell align="right">{idol.rarity}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell component="th"><strong>実装日</strong></TableCell>
+                  <TableCell component="th"><strong>实装日</strong></TableCell>
                   <TableCell align="right">{idol.avail.date}</TableCell>
                 </TableRow>
                 <TableRow>
@@ -252,12 +252,12 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.liveSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={4}>ライブスキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={4}>主动技能 ライブスキル</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
-                <TableCell align="left">効果</TableCell>
-                <TableCell align="left">リンクアピール</TableCell>
-                <TableCell align="left">開放条件</TableCell>
+                <TableCell align="left">技能名</TableCell>
+                <TableCell align="left">效果</TableCell>
+                <TableCell align="left">Link效果</TableCell>
+                <TableCell align="left">开放条件</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -266,7 +266,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
                   <TableCell>{s.link}</TableCell>
-                  <TableCell>{s.condition || ''}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -277,13 +277,13 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.passiveSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={5}>パッシブスキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={5}>被动技能 パッシブスキル</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
+                <TableCell align="left">效果</TableCell>
                 <TableCell align="left">条件</TableCell>
-                <TableCell align="left">確率</TableCell>
+                <TableCell align="left">发动概率</TableCell>
                 <TableCell align="left">最大</TableCell>
-                <TableCell align="left">開放条件</TableCell>
+                <TableCell align="left">开放条件</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -305,11 +305,11 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.otherSkillInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>その他スキル</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={3}>其它技能</TableCell></TableRow>
               <TableRow>
-                <TableCell align="left">スキル</TableCell>
-                <TableCell align="left">効果</TableCell>
-                <TableCell align="left">条件</TableCell>
+                <TableCell align="left">技能</TableCell>
+                <TableCell align="left">效果</TableCell>
+                <TableCell align="left">开放条件</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -317,7 +317,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow>
                   <TableCell>{s.name}</TableCell>
                   <TableCell>{s.effect}</TableCell>
-                  <TableCell>{s.condition || ''}</TableCell>
+                  <TableCell>{s.obtain || ''}</TableCell>
                 </TableRow>
               ))
               }
@@ -328,11 +328,11 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
         <Paper className={classes.omoideInfo}>
           <Table>
             <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>思い出アピール</TableCell></TableRow>
+              <TableRow><TableCell align="center" colSpan={3}>回忆炸弹 思い出アピール</TableCell></TableRow>
               <TableRow>
                 <TableCell align="left">LV</TableCell>
-                <TableCell align="left">効果</TableCell>
-                <TableCell align="left">Link効果</TableCell>
+                <TableCell align="left">效果</TableCell>
+                <TableCell align="left">Link效果</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

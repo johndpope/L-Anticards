@@ -22,10 +22,8 @@ import TableRow from '@material-ui/core/TableRow';
 
 import IdolAvatar from '../IdolAvatar';
 
-// import { IdolView, defaultIdolView, idolViewText } from './view';
-
 import { useAppData } from '../../context/AppData';
-import { SupportIdol, ProduceIdol, IdolType, Strength, membersList, unitsList } from '../../common/type';
+import { IdolType, Strength, membersList, unitsList, strengthsList } from '../../common/type';
 import { IdolView } from '../../common/filter';
 
 
@@ -200,7 +198,10 @@ const Filter: React.FunctionComponent<Props> = (props) => {
               {Object.values(IdolView).map(v => (<MenuItem value={v}> {v} </MenuItem>))}
             </Select>
           </FormControl>
-          <FormControl className={classes.filters}>
+          {
+            // Strengths filter, only for support cards
+            idolType == IdolType.support &&
+            <FormControl className={classes.filters}>
             <InputLabel htmlFor="select-multiple-chip">Strength</InputLabel>
             <Select multiple value={filter.strengths}
               onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {                
@@ -219,11 +220,13 @@ const Filter: React.FunctionComponent<Props> = (props) => {
               )}
             // MenuProps={MenuProps}
             >
-              {Object.keys(Strength).map(s => (
+              {strengthsList.map(s => (
                 <MenuItem key={s} value={s} > {s} </MenuItem>
               ))}
             </Select>
           </FormControl>
+          }
+
           <FormControl className={classes.filters}>
             <InputLabel htmlFor="select-multiple-chip">Member</InputLabel>
             <Select value={filter.member} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {

@@ -58,7 +58,7 @@ const anticaTheme = createMuiTheme({
 const styles = (theme: Theme) => createStyles({
   root: {
     display: 'flex',
-    //padding: spacing.unit,
+    padding: theme.spacing.unit,
     backgroundColor: theme.palette.background.default,
     color: theme.palette.primary.main,
   },
@@ -143,12 +143,14 @@ const App = withStyles(styles)((props: Props) => {
         className={classNames(classes.appBar, teamDrawerOpen && classes.appBarShift)}
       >
         <Toolbar disableGutters={!teamDrawerOpen} className={classes.toolbar}>
+          <div className={classes.menuButton}></div>
+          {/* TODO:
           <IconButton color="inherit" aria-label="Open drawer"
             onClick={OpenTeamDrawer}
             className={classNames(classes.menuButton, teamDrawerOpen && classes.menuButtonHidden)}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
             L'Anticards
           </Typography>
@@ -157,10 +159,10 @@ const App = withStyles(styles)((props: Props) => {
               <Tab label="Produce" value={GlobalTabs.produce} />
               <Tab label="Support" value={GlobalTabs.support} />
               <Tab label="Idol" value={GlobalTabs.idol} />
-              <Tab label="Team" value={GlobalTabs.team} />
+              {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
             </Tabs>
           </Typography>
-          <IconButton color="inherit" >
+          <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank'>
             <Badge badgeContent={null} color="secondary">
               <LocalParkingIcon />
             </Badge>
@@ -168,6 +170,7 @@ const App = withStyles(styles)((props: Props) => {
         </Toolbar>
       </AppBar>
 
+      {/* TODO:
       <Drawer
         variant="permanent"
         classes={{ paper: classNames(classes.drawerPaper, !teamDrawerOpen && classes.drawerPaperClose) }}
@@ -181,7 +184,7 @@ const App = withStyles(styles)((props: Props) => {
         </div>
         <Divider />
         <TeamList />
-      </Drawer>
+      </Drawer> */}
 
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

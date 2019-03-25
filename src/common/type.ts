@@ -12,7 +12,7 @@ export type ProduceIdol = {
     'name': string;
     'effect': string;
     'link': string;
-    'condition'?: string;
+    'obtain'?: string;
   }[];
   'passive_skills': {
     'effect': string;
@@ -24,7 +24,7 @@ export type ProduceIdol = {
   'other_skills': {
     'name': string;
     'effect': string;
-    'condition'?: string;
+    'obtain'?: string;
   }[];
   'omoide': {
     'name': string;
@@ -33,6 +33,7 @@ export type ProduceIdol = {
   }[];
   'meta': {
     'idol_id': number;
+    'strengths': string[];
   }
 }
 
@@ -65,7 +66,7 @@ export type SupportIdol = {
   'live_skills': {
     'name': string;
     'effect': string;
-    'condition'?: string;
+    'obtain'?: string;
   }[];
   'passive_skills': {
     'effect': string;
@@ -77,7 +78,7 @@ export type SupportIdol = {
   'other_skills': {
     'name': string;
     'effect': string;
-    'condition'?: string;
+    'obtain'?: string;
   }[];
   'support_skills': {
     'name': string;
@@ -87,6 +88,7 @@ export type SupportIdol = {
   }[];
   'meta': {
     'idol_id': number;
+    'strengths': string[];
   }
 };
 
@@ -102,11 +104,11 @@ export enum IdolType {
   support,
 }
 
-export enum Strength {
-  vo = 'vo',
-  da = 'da',
-  vi = 'vi'
-}
+// export enum Strength {
+//   vo = 'vo',
+//   da = 'da',
+//   vi = 'vi'
+// }
 
 const tuple = <T extends string[]>(...args: T) => args;
 export const membersList = tuple('櫻木真乃', '風野灯織', '八宮めぐる',
@@ -114,6 +116,8 @@ export const membersList = tuple('櫻木真乃', '風野灯織', '八宮めぐ�
                                 '小宮果穂', '園田智代子', '西城樹里', '杜野凛世', '有栖川夏葉',
                                 '大崎甘奈', '大崎甜花', '桑山千雪');
 export const unitsList = tuple('イルミネーションスターズ', 'アンティーカ', '放課後クライマックスガールズ', 'アルストロメリア');
+export const strengthsList = tuple('vo', 'da', 'vi', 'mental');
 
 export type MemberType = typeof membersList[number];
 export type UnitType = typeof unitsList[number];
+export type Strength = typeof strengthsList[number];

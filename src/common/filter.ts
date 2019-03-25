@@ -1,4 +1,4 @@
-import { Strength, SupportIdol, ProduceIdol, MemberType, UnitType } from './type';
+import { Strength, SupportIdol, ProduceIdol, MemberType, UnitType, strengthsList } from './type';
 import { defaultCmp } from './cmp';
 
 export const GlobalTabs = {
@@ -20,7 +20,7 @@ export const defaultProduceFilter = {
   listPage: 0,
   listRowPerPage: 5,
 
-  strengths: [Strength.vo, Strength.da, Strength.vi],
+  strengths: strengthsList as Strength[],
   skills: [] as number[],
   member: 'all' as (MemberType | 'all'),
   unit: 'all' as (UnitType | 'all'),
@@ -30,9 +30,14 @@ export type IdolFilter = typeof defaultProduceFilter;
 
 export const defualtSupportFilter: IdolFilter = defaultProduceFilter;
 
+const listIntersect = <T>(a: T[], b: T[]) => {
+  return a.filter(x => b.find(y => y==x) != undefined)
+}
+
 export const applySupportFilter = (idols: SupportIdol[], filter: IdolFilter) => {
   if (filter.member != 'all') idols = idols.filter((v) => v.idol == filter.member);
   if (filter.unit != 'all') idols = idols.filter((v) => v.unit == filter.unit);
+  idols = idols.filter((idol) => listIntersect(idol.meta.strengths, filter.strengths).length != 0);
   return idols.sort(defaultCmp)
 }
 
