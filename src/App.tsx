@@ -14,6 +14,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import LocalParkingIcon from '@material-ui/icons/LocalParking'
 
+import HintText from './components/HintText'
+
 
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -187,7 +189,8 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
 
 const IntroPage = ()  => {
   return (
-    <div></div>
+    <div>
+    </div>
   )
 }
 

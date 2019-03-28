@@ -35,6 +35,7 @@ import { IdolType, Strength, membersList, unitsList, strengthsList, liveSkillsLi
 import { IdolView } from '../../common/filter';
 import { useToggle } from '../../hooks/gadget';
 import { liveSkillText, passiveSkillText } from '../../common/text';
+import HintText from '../HintText';
 
 
 const styles = createStyles({
@@ -152,7 +153,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map((s, index) => (<TableRow key={index}>{s.effect}</TableRow>))}
+                {idol.live_skills.map((s, index) => (<TableRow key={index}><HintText text={s.effect} /></TableRow>))}
               </TableCell>
             </TableRow>
           ))
@@ -168,7 +169,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map((s, index) => (<TableRow key={index}>{s.effect}</TableRow>))}
+                {idol.live_skills.map((s, index) => (<TableRow key={index}><HintText text={s.effect} /></TableRow>))}
               </TableCell>
             </TableRow>
           ))

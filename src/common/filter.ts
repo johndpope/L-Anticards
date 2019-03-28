@@ -12,7 +12,7 @@ export const GlobalTabs = {
   intro: 'intro',
 }
 
-export const defaultTab = GlobalTabs.produce;
+export const defaultTab = GlobalTabs.intro;
 
 export const IdolView = {
   grip: 'grip',
