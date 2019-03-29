@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'hkgokukaikk';
+    src: url('./asserts/fonts/hkgokukaikk.ttf') format('truetype');
+}
+
 body {
   margin: 0;
   padding: 0;

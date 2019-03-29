@@ -13,7 +13,7 @@ function padLeft(text: string, padChar: string, size: number): string {
 }
 
 function avatarUrl(idolID: number): string {
-  return './image/mini/' + padLeft(idolID.toString(), '0', 4) + '.jpg'
+  return process.env.PUBLIC_URL + '/image/mini/' + padLeft(idolID.toString(), '0', 4) + '.jpg'
 }
 
 const styles = createStyles({

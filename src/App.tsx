@@ -12,11 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import LocalParkingIcon from '@material-ui/icons/LocalParking'
-
-import HintText from './components/HintText'
-
-
+import LocalParkingIcon from '@material-ui/icons/LocalParking';
+import Link from '@material-ui/core/Link';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
@@ -30,6 +27,7 @@ import TeamList from './components/TeamList'
 import IdolPage from './components/IdolPage'
 import { IdolType } from './common/type';
 import { GlobalTabs } from './common/filter';
+import IntroPage from './components/IntroPage';
 
 var classNames = require('classnames');
 
@@ -125,7 +123,6 @@ const styles = (theme: Theme) => createStyles({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    height: '100vh',
     overflow: 'auto',
   },
 });
@@ -151,9 +148,11 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
           >
             <MenuIcon />
           </IconButton> */}
-        <Typography component="h1" variant="h5" color="inherit" noWrap className={classes.title}>
-          {'L\'Anticards'}
-        </Typography>
+        <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit' className={classes.title}>
+          <Typography component="h1" variant="h5" color='inherit' noWrap>
+            {'L\'Anticards'}
+          </Typography>
+        </Link>
         <Typography color="inherit" className={classes.typeTab}>
           <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
             <Tab label="Produce" value={GlobalTabs.produce} />
@@ -162,7 +161,7 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
             {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
           </Tabs>
         </Typography>
-        <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank'>
+        <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">
           <Badge badgeContent={null} color="secondary">
             <LocalParkingIcon />
           </Badge>
@@ -186,13 +185,6 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
       </Drawer> */
   );
 });
-
-const IntroPage = ()  => {
-  return (
-    <div>
-    </div>
-  )
-}
 
 const ContentContainer = withStyles(styles)((props: Props) => {
   const { tab } = useAppData();
