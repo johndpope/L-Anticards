@@ -6,7 +6,7 @@ import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
-import haitaiImage from '../../asserts/haitai1.jpg';
+import haitaiImage from '../../asserts/haitai2.jpg';
 import { Link } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({
@@ -55,7 +55,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
     <main>
         <div className={classes.tubaro}>
           <div className={classes.tubaroContent}>
-            <Typography component="h1" variant="h2" align="center" style={{
+            {/* <Typography component="h1" variant="h2" align="center" style={{
               color: '#A91727',
               fontFamily: 'hkgokukaikk',
               fontSize: 100,
@@ -74,7 +74,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
               WebkitTextStroke: '0.2px black',
             }} paragraph>
               <strong>你顶多就是个 P 吧。</strong>
-            </Typography>
+            </Typography> */}
           </div>
         </div>
         <Grid container spacing={40} className={classes.mainGrid}>
@@ -89,8 +89,6 @@ const IntroPage = withStyles(styles)((props: Props) => {
                   <li>回忆炸弹 LV. 3, 4 的 link appeal 效果未录入，请对照游戏观看</li>
                   <li>目前没有对窄屏作任何优化，手机请用电脑版网页</li>
                   <li>所有的数据均无法完全保证正确性，请以游戏内为主</li>
-                  <li>第一次写的前端项目，有任何建议/开发/翻译想法都请戳 
-                    <Link href='https://weibo.com/u/6493924394' target='_blank' rel="noopener">Weibo</Link></li>
                 </ul>
               </Typography>
               <Typography variant="h6" gutterBottom>
@@ -124,9 +122,6 @@ const IntroPage = withStyles(styles)((props: Props) => {
               </Paper> */}
               <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                 Bug 报告
-              </Typography>
-              <Typography>
-                <Link href='https://weibo.com/u/6493924394' target='_blank' rel="noopener">Weibo</Link>
               </Typography>
               <Typography>
                 <Link href='https://github.com/kannpro/L-Anticards/issues' target='_blank' rel="noopener">Github Issue</Link>

@@ -148,11 +148,13 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
           >
             <MenuIcon />
           </IconButton> */}
-        <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit' className={classes.title}>
+        <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit'>
           <Typography component="h1" variant="h5" color='inherit' noWrap>
             {'L\'Anticards'}
           </Typography>
         </Link>
+        <Typography component="h1" variant="h5" color='inherit' noWrap className={classes.title}>
+        </Typography>
         <Typography color="inherit" className={classes.typeTab}>
           <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
             <Tab label="Produce" value={GlobalTabs.produce} />

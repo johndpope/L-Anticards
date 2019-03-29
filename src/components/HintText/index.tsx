@@ -51,7 +51,7 @@ const replaceText: { [v: string]: {'hint': string | null, 'color': string} } = {
   '兴趣': {'hint': '興味：值越高，审查员满足度更容易上升（伤害越高）', 'color': '#20BA03'},
   '注目度': {'hint': '注目度：值越高，被审查员审查的概率越高', 'color': '#20BA03'},
   '影响力': {'hint': '影響力：值越高，审查员对偶像的mental伤害越高', 'color': '#20BA03'},
-  '忧郁': {'hint': 'メランコリー効果：展示阶段开始时收到mental伤害', 'color': '#20BA03'},
+  '忧郁': {'hint': 'メランコリー効果：展示阶段开始时受到mental伤害', 'color': '#20BA03'},
 }
 
 const replaceRegex = /(Vocal)|(Dance)|(Visual)|(SP)|(mental)|(兴趣)|(注目度)|(影响力)|(忧郁)/g;
