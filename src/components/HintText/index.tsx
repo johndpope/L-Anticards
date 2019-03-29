@@ -58,7 +58,6 @@ const replaceRegex = /(Vocal)|(Dance)|(Visual)|(SP)|(mental)|(兴趣)|(注目度
 
 const HintText: React.FC<{ text: string }> = (props) => {
   const { text } = props;
-  console.log(text.split(replaceRegex));
   const hinted = text
     .split(replaceRegex)
     .map((x => {

@@ -40,7 +40,7 @@ export const passiveSkillTextDict: { [key: string]: string } = {
 }
 
 export const liveSkillText = (s: LiveSkill | 'none') => {
-  if (s == 'none') {
+  if (s === 'none') {
     return '无';
   } else {
     return liveSkillTextDict[s];
@@ -48,7 +48,7 @@ export const liveSkillText = (s: LiveSkill | 'none') => {
 }
 
 export const passiveSkillText = (s: PassiveSkill | 'none') => {
-  if (s == 'none') {
+  if (s === 'none') {
     return '无';
   } else {
     return passiveSkillTextDict[s];

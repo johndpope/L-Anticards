@@ -1,4 +1,4 @@
-export type ProduceIdol = {
+export interface ProduceIdol {
   'id': number;
   'name': string;
   'rarity': string;
@@ -8,29 +8,29 @@ export type ProduceIdol = {
     'date': string;
     'source': string;
   };
-  'live_skills': {
+  'live_skills': Array<{
     'name': string;
     'effect': string;
     'link': string;
     'obtain'?: string;
-  }[];
-  'passive_skills': {
+  }>;
+  'passive_skills': Array<{
     'effect': string;
     'probability': number;
     'max_time': number;
     'condition': number;
     'obtain'?: string,
-  }[];
-  'other_skills': {
+  }>;
+  'other_skills': Array<{
     'name': string;
     'effect': string;
     'obtain'?: string;
-  }[];
-  'omoide': {
+  }>;
+  'omoide': Array<{
     'name': string;
     'effect': string;
     'link': string;
-  }[];
+  }>;
   'meta': {
     'idol_id': number;
     'strengths': string[];
@@ -39,7 +39,7 @@ export type ProduceIdol = {
   }
 }
 
-export type SupportIdol = {
+export interface SupportIdol {
   'id': number;
   'name': string;
   'rarity': string;
@@ -50,45 +50,45 @@ export type SupportIdol = {
     'source_detail': string;
     'source': string;
   };
-  'status': {
+  'status': Array<{
     'lv': number;
     'vo'?: number;
     'da'?: number;
     'vi'?: number;
     'mental'?: number;
     'star'?: number;
-  }[];
-  'events': {
+  }>;
+  'events': Array<{
     'name': string;
     'vo'?: number;
     'da'?: number;
     'vi'?: number;
     'mental'?: number;
     'sp'?: number;
-  }[];
-  'live_skills': {
+  }>;
+  'live_skills': Array<{
     'name': string;
     'effect': string;
     'obtain'?: string;
-  }[];
-  'passive_skills': {
+  }>;
+  'passive_skills': Array<{
     'effect': string;
     'probability': number;
     'max_time': number;
     'condition': number;
     'obtain'?: string;
-  }[];
-  'other_skills': {
+  }>;
+  'other_skills': Array<{
     'name': string;
     'effect': string;
     'obtain'?: string;
-  }[];
-  'support_skills': {
+  }>;
+  'support_skills': Array<{
     'name': string;
     'effect': string;
     'get_lv': number[];
     'lv': number[];
-  }[];
+  }>;
   'meta': {
     'idol_id': number;
     'strengths': string[];
@@ -102,7 +102,7 @@ export type SupportIdol = {
       'sp': number,
     },
   }
-};
+}
 
 export interface LiveSkillMeta {
   'effect': LiveSkillEffect[],
@@ -123,7 +123,7 @@ interface PassiveSkillEffect {
   'genres'?: string[],
 }
 
-export type AllIdolList = {
+export interface AllIdolList {
   'p': ProduceIdol[];
   's': SupportIdol[];
 }

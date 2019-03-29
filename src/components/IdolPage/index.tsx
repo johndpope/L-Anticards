@@ -71,7 +71,7 @@ const parseSupportSkillList = (get_lv: number[], lv: number[]) => {
 };
 
 const positiveOrEmpty = (t: number) => {
-  return (t == 0) ? "" : t;
+  return (t == 0) ? '' : t;
 }
 
 const IdolPage: React.FunctionComponent<Props> = (props) => {
@@ -204,7 +204,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
               {idol.events.map((s, index) => (
                 <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
-                  <TableCell>{s.vo || ""}</TableCell>
+                  <TableCell>{s.vo || ''}</TableCell>
                   <TableCell>{s.da || ''}</TableCell>
                   <TableCell>{s.vi || ''}</TableCell>
                   <TableCell>{s.mental || ''}</TableCell>

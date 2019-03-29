@@ -1,7 +1,6 @@
-import {
-  Strength, SupportIdol, ProduceIdol, MemberType, UnitType, strengthsList,
-  LiveSkill, LiveSkillMeta, PassiveSkill, PassiveSkillMeta
-} from './type';
+import { ProduceIdol, SupportIdol } from './type';
+import { MemberType, Strength, strengthsList, UnitType } from './type';
+import { LiveSkill, LiveSkillMeta, PassiveSkill, PassiveSkillMeta } from './type';
 import { defaultCmp } from './cmp';
 
 export const GlobalTabs = {
@@ -37,43 +36,51 @@ export type IdolFilter = typeof defaultProduceFilter;
 export const defualtSupportFilter: IdolFilter = defaultProduceFilter;
 
 const listIntersect = <T>(a: T[], b: T[]) => {
-  return a.filter(x => b.find(y => y == x) != undefined)
+  return a.filter(x => b.find(y => y === x) !== undefined)
 }
 
 const liveSkillSelector = (skills: LiveSkillMeta[], filter: LiveSkill) => {
   return [...skills.map(s => s.effect).flat(), ...skills.map(s => s.link).flat(),]
     .filter((s => {
-      return s != undefined && s.action == filter
+      return s !== undefined && s.action === filter
     })).length > 0
 }
 
 const passiveSkillSelector = (skills: PassiveSkillMeta[], filter: PassiveSkill) => {
   return skills.map(s => s.effect).flat()
     .filter((s => {
-      return s != undefined && s.action == filter
+      return s !== undefined && s.action === filter
     })).length > 0
 }
 
 export const applySupportFilter = (idols: SupportIdol[], filter: IdolFilter) => {
-  if (filter.member != 'all') idols = idols.filter((v) => v.idol == filter.member);
-  if (filter.unit != 'all') idols = idols.filter((v) => v.unit == filter.unit);
-  idols = idols.filter((idol) => listIntersect(idol.meta.strengths, filter.strengths).length != 0);
-  if (filter.liveSkill != 'none') {
+  if (filter.member !== 'all') {
+    idols = idols.filter((v) => v.idol === filter.member);
+  }
+  if (filter.unit !== 'all') {
+    idols = idols.filter((v) => v.unit === filter.unit);
+  }
+  idols = idols.filter((idol) => listIntersect(idol.meta.strengths, filter.strengths).length !== 0);
+  if (filter.liveSkill !== 'none') {
     idols = idols.filter((idol) => liveSkillSelector(idol.meta.live_skills, filter.liveSkill as LiveSkill))
   }
-  if (filter.passiveSkill != 'none') {
+  if (filter.passiveSkill !== 'none') {
     idols = idols.filter((idol) => passiveSkillSelector(idol.meta.passive_skills, filter.passiveSkill as PassiveSkill))
   }
   return idols.sort(defaultCmp)
 }
 
 export const applyProduceFilter = (idols: ProduceIdol[], filter: IdolFilter) => {
-  if (filter.member != 'all') idols = idols.filter((v) => v.idol == filter.member);
-  if (filter.unit != 'all') idols = idols.filter((v) => v.unit == filter.unit);
-  if (filter.liveSkill != 'none') {
+  if (filter.member !== 'all') {
+    idols = idols.filter((v) => v.idol === filter.member);
+  }
+  if (filter.unit !== 'all') {
+    idols = idols.filter((v) => v.unit === filter.unit);
+  }
+  if (filter.liveSkill !== 'none') {
     idols = idols.filter((idol) => liveSkillSelector(idol.meta.live_skills, filter.liveSkill as LiveSkill))
   }
-  if (filter.passiveSkill != 'none') {
+  if (filter.passiveSkill !== 'none') {
     idols = idols.filter((idol) => passiveSkillSelector(idol.meta.passive_skills, filter.passiveSkill as PassiveSkill))
   }
   return idols.sort(defaultCmp)
