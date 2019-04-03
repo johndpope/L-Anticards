@@ -86,9 +86,11 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Divider />
               <Typography paragraph>
                 <ul>
-                  <li>回忆炸弹 LV. 3, 4 的 link appeal 效果未录入，请对照游戏观看</li>
+                  <li>关于 S卡擅长属性的定义是脑补的，仅供参考。规则：被动技能里这种属性的技能数目 >= 3（mental >= 2）。
+                    比如先生千雪就定义为 vo, mental 擅长。
+                    有的特例是手标的，比如进闸真乃只有两个被动技能，都是 Da, Vi UP，所以定义为 da, vi 擅长</li>
                   <li>目前没有对窄屏作任何优化，手机请用电脑版网页</li>
-                  <li>所有的数据均无法完全保证正确性，请以游戏内为主</li>
+                  <li>所有的数据均无法完全保证正确性，请以游戏内为主，或者点 Bug 报告</li>
                 </ul>
               </Typography>
               <Typography variant="h6" gutterBottom>
@@ -97,6 +99,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Divider />
               <Typography paragraph>
                 <ul>
+                  <li>2019-04-03，修复：回忆炸弹3, 4级效果缺失</li>
                   <li>2019-03-29，更新主页、技能效果染色、名词说明</li>
                   <li>2019-03-25，第一版 demo</li>
                 </ul>
@@ -121,7 +124,10 @@ const IntroPage = withStyles(styles)((props: Props) => {
                 </Typography>
               </Paper> */}
               <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Bug 报告
+                建议/Bug 报告
+              </Typography>
+              <Typography>
+                <Link href='https://peing.net/zh-CN/yabukikanyan?event=0' target='_blank' rel="noopener">Peing(什么都可以说)</Link>
               </Typography>
               <Typography>
                 <Link href='https://github.com/kannpro/L-Anticards/issues' target='_blank' rel="noopener">Github Issue</Link>

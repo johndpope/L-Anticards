@@ -383,7 +383,7 @@ const IdolPage: React.FunctionComponent<Props> = (props) => {
                 <TableRow key={index}>
                   <TableCell>{s.name}</TableCell>
                   <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.link}</TableCell>
+                  <TableCell><HintText text={s.link} /></TableCell>
                 </TableRow>
               ))
               }

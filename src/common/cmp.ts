@@ -6,8 +6,18 @@ interface IIdol {
   }
 }
 
+const rarityValue = (r: string) => {
+  switch (r) {
+    case 'SSR': return 4;
+    case 'SR': return 3;
+    case 'R': return 2;
+    case 'N': return 1;
+  }
+  return 0;
+}
+
 const cmpRarity = (a: string, b: string) => {
-  return b.length - a.length;
+  return rarityValue(b) - rarityValue(a);
 }
 
 export const defaultCmp = (a: IIdol, b: IIdol) => {

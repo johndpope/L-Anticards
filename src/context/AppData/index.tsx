@@ -64,6 +64,12 @@ export class AppDataProvider extends React.PureComponent<AppDataContentProps, Ap
   applyFilter = () => {
     this.setState((prevState) => {
       const idols = prevState.allIdols;
+      // console.log({
+      //   sall: prevState.allIdols.s.length,
+      //   snow: applySupportFilter(idols.s, prevState.supportFilter).length,
+      //   pall: prevState.allIdols.p.length,
+      //   pnow: applyProduceFilter(idols.p, prevState.produceFilter).length,
+      // })
       return {
         supportIdols: applySupportFilter(idols.s, prevState.supportFilter),
         produceIdols: applyProduceFilter(idols.p, prevState.produceFilter),
