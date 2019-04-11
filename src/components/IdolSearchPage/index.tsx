@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles, WithStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -38,7 +38,7 @@ import { liveSkillText, passiveSkillText } from '../../common/text';
 import HintText from '../HintText';
 
 
-const styles = createStyles({
+const styles = (theme: Theme) => createStyles({
   root: {
     width: '97%',
   },
@@ -58,8 +58,12 @@ const styles = createStyles({
     minWidth: 120,
   },
   liveSkillGroup: {
-    maxWidth: 400,
-    maxHeight: 400,
+    [theme.breakpoints.down('xs')]: {
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxWidth: 400,
+      maxHeight: 400,
+    },
   },
   // strengthControl: {
   //   //margin: theme.spacing.unit,
@@ -69,13 +73,6 @@ const styles = createStyles({
   strengthMenu: {
     maxHeight: 200,
     // width: 150,
-  },
-  idolGrips: {
-    //height: 450,
-  },
-  idolGrip: {
-    width: 110,
-    height: 130,
   },
   idolList: {
   },
@@ -111,17 +108,17 @@ const IdolGrips: React.FunctionComponent<Props> = (props) => {
   const { classes, idolType } = props;
   const { supportIdols, produceIdols } = appData;
   return (
-    <GridList className={classes.idolGrips}>
+    <GridList>
       {idolType === IdolType.support &&
         supportIdols.map(idol => (
-          <GridListTile key={idol.id} style={styles.idolGrip} >
+          <GridListTile key={idol.id} style={{width: 100, height: 130}} >
             <IdolAvatar idolType={idolType} idolID={idol.id} />
           </GridListTile>
         ))
       }
       {idolType === IdolType.produce &&
         produceIdols.map(idol => (
-          <GridListTile key={idol.id} style={styles.idolGrip} >
+          <GridListTile key={idol.id} style={{width: 100, height: 130}} >
             <IdolAvatar idolType={idolType} idolID={idol.id} />
           </GridListTile>
         ))
@@ -294,7 +291,9 @@ const Filter: React.FunctionComponent<Props> = (props) => {
           <RadioGroup
             value={filter.liveSkill}
             className={classes.liveSkillGroup}
-            onChange={(e, value) => setFilter(idolType, { ...filter, liveSkill: value as typeof filter.liveSkill })}
+            onChange={(e, value) => 
+              setFilter(idolType, { ...filter, liveSkill: value as typeof filter.liveSkill 
+            })}
           >
             {['none', ...liveSkillsList].map((s, index) =>
               <FormControlLabel value={s} control={<Radio />} key={index}

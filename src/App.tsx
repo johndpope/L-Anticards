@@ -13,9 +13,11 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
+import Home from '@material-ui/icons/Home';
 import Link from '@material-ui/core/Link';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Hidden from '@material-ui/core/Hidden';
 
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
@@ -140,7 +142,7 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
       className={classNames(classes.appBar, teamDrawerOpen && classes.appBarShift)}
     >
       <Toolbar disableGutters={!teamDrawerOpen} className={classes.toolbar}>
-        <div className={classes.menuButton}></div>
+        
         {/* TODO:
           <IconButton color="inherit" aria-label="Open drawer"
             onClick={OpenTeamDrawer}
@@ -148,11 +150,22 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
           >
             <MenuIcon />
           </IconButton> */}
-        <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit'>
-          <Typography component="h1" variant="h5" color='inherit' noWrap>
-            {'L\'Anticards'}
-          </Typography>
-        </Link>
+        <div className={classes.menuButton}>
+          <Hidden smUp>
+            <IconButton color="inherit" onClick={() => setTab(GlobalTabs.intro)}>
+              <Home />
+            </IconButton>
+          </Hidden>
+        </div>
+        <Hidden xsDown>
+          <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit'>
+            <Typography component="h1" variant="h5" color='inherit' noWrap>
+              {'L\'Anticards'}
+            </Typography>
+          </Link>
+        </Hidden>
+
+        {/* padding between title and tabs */}
         <Typography component="h1" variant="h5" color='inherit' noWrap className={classes.title}>
         </Typography>
         <Typography color="inherit" className={classes.typeTab}>
@@ -163,11 +176,13 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
             {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
           </Tabs>
         </Typography>
-        <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">
-          <Badge badgeContent={null} color="secondary">
-            <LocalParkingIcon />
-          </Badge>
-        </IconButton>
+        <Hidden xsDown>
+          <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">
+            <Badge badgeContent={null} color="secondary">
+              <LocalParkingIcon />
+            </Badge>
+          </IconButton>
+        </Hidden>
       </Toolbar>
     </AppBar>
     /* TODO:

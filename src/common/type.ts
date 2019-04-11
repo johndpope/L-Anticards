@@ -1,7 +1,7 @@
 export interface ProduceIdol {
   'id': number;
   'name': string;
-  'rarity': string;
+  'rarity': Rarity;
   'idol': string;
   'unit': string;
   'avail': {
@@ -18,7 +18,7 @@ export interface ProduceIdol {
     'effect': string;
     'probability': number;
     'max_time': number;
-    'condition': number;
+    'condition': string;
     'obtain'?: string,
   }>;
   'other_skills': Array<{
@@ -42,7 +42,7 @@ export interface ProduceIdol {
 export interface SupportIdol {
   'id': number;
   'name': string;
-  'rarity': string;
+  'rarity': Rarity;
   'idol': string;
   'unit': string;
   'avail': {
@@ -75,7 +75,7 @@ export interface SupportIdol {
     'effect': string;
     'probability': number;
     'max_time': number;
-    'condition': number;
+    'condition': string;
     'obtain'?: string;
   }>;
   'other_skills': Array<{
@@ -160,3 +160,4 @@ export type UnitType = typeof unitsList[number];
 export type Strength = typeof strengthsList[number];
 export type LiveSkill = typeof liveSkillsList[number];
 export type PassiveSkill = typeof passiveSkillList[number];
+export type Rarity = 'N' | 'R' | 'SR' | 'SSR';

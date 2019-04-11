@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 
-import { CardActions } from '@material-ui/core';
+import { CardActions, Theme } from '@material-ui/core';
 import { useAppData } from '../../context/AppData';
 import { IdolType } from '../../common/type';
 
@@ -13,17 +13,17 @@ function padLeft(text: string, padChar: string, size: number): string {
 }
 
 function avatarUrl(idolID: number): string {
-  return process.env.PUBLIC_URL + '/image/mini/' + padLeft(idolID.toString(), '0', 4) + '.jpg'
+  return process.env.PUBLIC_URL + '/image/mini/i' + padLeft(idolID.toString(), '0', 4) + '.jpg'
 }
 
-const styles = createStyles({
+const styles = (theme: Theme) => createStyles({
   card: {
-    width: 100,
+    width: 95,
     height: 130,
   },
   cardActionArea: {
-    width: 100,
-    height: 100,
+    width: 95,
+    height: 95,
   }
 });
 

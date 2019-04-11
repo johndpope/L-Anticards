@@ -1,12 +1,14 @@
+import { Rarity } from './type';
+
 interface IIdol {
   id: number;
-  rarity: string;
+  rarity: Rarity;
   meta: {
     idol_id: number;
   }
 }
 
-const rarityValue = (r: string) => {
+const rarityValue = (r: Rarity) => {
   switch (r) {
     case 'SSR': return 4;
     case 'SR': return 3;
@@ -16,7 +18,7 @@ const rarityValue = (r: string) => {
   return 0;
 }
 
-const cmpRarity = (a: string, b: string) => {
+const cmpRarity = (a: Rarity, b: Rarity) => {
   return rarityValue(b) - rarityValue(a);
 }
 

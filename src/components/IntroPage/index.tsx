@@ -5,20 +5,22 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 import haitaiImage from '../../asserts/haitai2.jpg';
 import { Link } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({
-  tubaro: {
-    width: 728,
-    height: 410,
-    margin: '0 auto',
-    backgroundImage: `url(${haitaiImage})`,
-  },
-  tubaroContent: {
-    padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
-  },
+  // tubaro: {
+  //   width: 728,
+  //   height: 410,
+  //   margin: '0 auto',
+  //   backgroundImage: `url(${haitaiImage})`,
+  //   backgroundSize: 'contain',
+  // },
+  // tubaroContent: {
+  //   padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
+  // },
 
   mainGrid: {
     marginTop: theme.spacing.unit * 3,
@@ -53,9 +55,9 @@ const IntroPage = withStyles(styles)((props: Props) => {
   const { classes } = props;
   return (
     <main>
-        <div className={classes.tubaro}>
+        {/* <div className={classes.tubaro}>
           <div className={classes.tubaroContent}>
-            {/* <Typography component="h1" variant="h2" align="center" style={{
+            <Typography component="h1" variant="h2" align="center" style={{
               color: '#A91727',
               fontFamily: 'hkgokukaikk',
               fontSize: 100,
@@ -74,10 +76,26 @@ const IntroPage = withStyles(styles)((props: Props) => {
               WebkitTextStroke: '0.2px black',
             }} paragraph>
               <strong>你顶多就是个 P 吧。</strong>
-            </Typography> */}
+            </Typography>
           </div>
-        </div>
+        </div> */}
         <Grid container spacing={40} className={classes.mainGrid}>
+            <Hidden xsDown>
+              <Grid container justify={'center'}>
+                <img src={haitaiImage} alt={'ryu3'} style={{
+                  maxWidth: '80%',
+                  // height: 'auto',
+                  objectFit: 'none',
+                }}/>
+              </Grid>
+            </Hidden>
+            <Hidden smUp>
+              <Grid container justify={'center'}>
+                <Typography component="h1" variant="h5" color='inherit' noWrap>
+                  {'L\'Anticards'}
+                </Typography>
+              </Grid>
+            </Hidden>
             {/* Main */}
             <Grid item xs={12} md={8}>
               <Typography variant="h6" gutterBottom>
@@ -86,11 +104,11 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Divider />
               <Typography paragraph>
                 <ul>
-                  <li>关于 S卡擅长属性的定义是脑补的，仅供参考。规则：被动技能里这种属性的技能数目 >= 3（mental >= 2）。
+                  <li>{`关于 S卡擅长属性的定义是脑补的，仅供参考。规则：被动技能里这种属性的技能数目 >= 3（mental >= 2）。
                     比如先生千雪就定义为 vo, mental 擅长。
-                    有的特例是手标的，比如进闸真乃只有两个被动技能，都是 Da, Vi UP，所以定义为 da, vi 擅长</li>
-                  <li>目前没有对窄屏作任何优化，手机请用电脑版网页</li>
-                  <li>所有的数据均无法完全保证正确性，请以游戏内为主，或者点 Bug 报告</li>
+                    有的特例是手标的，比如进闸真乃只有两个被动技能，都是 Da, Vi UP，所以定义为 da, vi 擅长`}</li>
+                  <li>{'所有的数据均无法完全保证正确性，请以游戏内为主'}</li>
+                  <li>{'Bug 报告请尽量带上所用系统/浏览器/在什么情况下出现，或者在 github issue 中写以方便交流'}</li>
                 </ul>
               </Typography>
               <Typography variant="h6" gutterBottom>
@@ -99,6 +117,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Divider />
               <Typography paragraph>
                 <ul>
+                  <li>2019-04-11，适配窄屏</li>
                   <li>2019-04-03，修复：回忆炸弹3, 4级效果缺失</li>
                   <li>2019-03-29，更新主页、技能效果染色、名词说明</li>
                   <li>2019-03-25，第一版 demo</li>

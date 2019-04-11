@@ -6,66 +6,50 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHead from '@material-ui/core/TableHead';
 
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+
 import IdolAvatar from '../IdolAvatar';
 import { useAppData } from '../../context/AppData';
-import { IdolType } from '../../common/type';
-import { Typography, Paper } from '@material-ui/core';
+import { IdolType, ProduceIdol, SupportIdol, Rarity } from '../../common/type';
+import { Theme } from '@material-ui/core';
 
 import HintText from '../HintText';
 
-const styles = createStyles({
-  topInfo: {
-    margin: '0 0 3% 0'
+const styles = (theme: Theme) => createStyles({
+  mainGrid: {
+    marginTop: theme.spacing.unit * 3,
   },
-  avatar: {
-    float: 'left',
-    margin: '3% 15% 3% 5%',
-  },
-  basicInfo: {
-    float: 'left',
-    width: '60%',
-    // marginTop: ,
-    overflowX: 'auto',
-  },
-  liveSkillInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  passiveSkillInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  otherSkillInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  eventsInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  omoideInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  supportSkillInfo: {
-    width: '90%',
-    margin: '1%',
-  },
-  supportSkillLevelCol: {
+  tableBorder: {
     borderStyle: 'solid',
-    width: '3%',
     borderWidth: 1,
-  }
+  },
 });
 
 interface Props extends WithStyles<typeof styles> {
 }
 
-const supportSkillLevels = [50, 55, 60, 65, 70, 75, 80];
+const getSupportSkillLevels = (rarity: Rarity) => {
+  switch (rarity) {
+    case 'N':
+      return [1, 10];
+    case 'R':
+      return [1, 30, 40, 50, 60];
+    case 'SR':
+      return [40, 50, 55, 60, 65, 70]
+    default:
+      return [50, 55, 60, 65, 70, 75, 80];
+  }
+}
 
-const parseSupportSkillList = (get_lv: number[], lv: number[]) => {
-  const s = get_lv.reduce((acc, x, index) => (Math.max(acc, x <= supportSkillLevels[0] ? lv[index] : 0)), 0)
-  return supportSkillLevels.slice(1).reduce((acc, cur) => acc.concat(
+const parseSupportSkillList = (rarity: Rarity, get_lv: number[], lv: number[]) => {
+  let levels = getSupportSkillLevels(rarity);
+
+  const s = get_lv.reduce((acc, x, index) => (Math.max(acc, x <= levels[0] ? lv[index] : 0)), 0)
+  return levels.slice(1).reduce((acc, cur) => acc.concat(
     lv[get_lv.findIndex(x => x == cur)] || 0
   ), [s])
 };
@@ -74,323 +58,418 @@ const positiveOrEmpty = (t: number) => {
   return (t == 0) ? '' : t;
 }
 
+const ResponsiveSkillTable: React.FC<{
+  title: (JSX.Element | string),
+  headers: (JSX.Element | string)[],
+  table: (JSX.Element | string | undefined)[][],
+  smRender?: (e: (JSX.Element | string | undefined)[], index: number) => JSX.Element,
+}> = (props) => {
+  const { title, headers, table, smRender } = props;
+  return (
+    <>
+      <Hidden xsDown>
+        <Paper>
+          <Table padding={'dense'}>
+            <TableHead>
+              <TableRow><TableCell align="center" colSpan={headers.length}>{title}</TableCell></TableRow>
+              <TableRow>
+                {headers.map((x, index) => <TableCell align="left" key={index}>{x}</TableCell>)}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {table.map((row, index) =>
+                <TableRow key={index}>
+                  {row.map((x, index) => <TableCell key={index}>{x}</TableCell>)}
+                </TableRow>)
+              }
+            </TableBody>
+          </Table>
+        </Paper>
+      </Hidden>
+      <Hidden smUp>
+        <Paper>
+          <Table padding={'dense'}>
+            <TableHead>
+              <TableRow><TableCell align="center">{title}</TableCell></TableRow>
+            </TableHead>
+            <TableBody>
+              {smRender ? table.map((row, index1) => smRender(row, index1)) :
+                table.map((row, index1) => row.map((x, index2) => {
+                  if (x) {
+                    return <TableRow><TableCell>{x}</TableCell></TableRow>
+                  } else {
+                    return undefined
+                  }
+                }))
+              }
+            </TableBody>
+          </Table>
+        </Paper>
+      </Hidden>
+    </>
+  )
+}
+
+const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
+  const { classes, idol } = props;
+  return (
+    <Grid container className={classes.mainGrid} justify={'center'} spacing={16}>
+      <Grid item container sm={3} xs={11} justify={'center'}>
+        <IdolAvatar idolType={IdolType.produce} idolID={idol.id}></IdolAvatar>
+      </Grid>
+      <Grid item sm={8} xs={11}>
+        <Paper>
+          <Table padding={'dense'}>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th"><strong>卡名</strong></TableCell>
+                <TableCell align="right">{idol.name}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>稀有度</strong></TableCell>
+                <TableCell align="right">{idol.rarity}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>实装日</strong></TableCell>
+                <TableCell align="right">{idol.avail.date}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>入手方法</strong></TableCell>
+                <TableCell align="right">{idol.avail.source}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'主动技能 ライブスキル'}
+          headers={['技能名', '效果', 'Link效果', '开放条件']}
+          table={idol.live_skills.map(s => [
+            s.name,
+            <HintText text={s.effect} />,
+            <HintText text={s.link} />,
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />LINK: {e[2]}<br />
+              {e[3] && (<>条件: {e[3]}</>)}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'被动技能 パッシブスキル'}
+          headers={['效果', '条件', '发动概率', '最大', '开放条件']}
+          table={idol.passive_skills.map(s => [
+            <HintText text={s.effect} />,
+            s.condition,
+            s.probability.toString() + '%',
+            s.max_time.toString() + '回',
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              {e[0]}<br /><br />{e[2]} | {e[3]} | {e[1]}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'其它技能'}
+          headers={['技能', '效果', '开放条件']}
+          table={idol.other_skills.map(s => [
+            s.name,
+            <HintText text={s.effect} />,
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />
+              {e[2] && (<>条件: {e[2]}</>)}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'回忆炸弹 思い出アピール'}
+          headers={['LV', '效果', 'Link效果']}
+          table={idol.omoide.map(s => [
+            s.name,
+            <HintText text={s.effect} />,
+            <HintText text={s.link} />,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />LINK: {e[2]}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+    </Grid>
+  )
+}
+
+const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
+  const { classes, idol } = props;
+  return (
+    <Grid container className={classes.mainGrid} justify={'center'} spacing={16}>
+      <Grid item container sm={3} xs={11} justify={'center'}>
+        <IdolAvatar idolType={IdolType.support} idolID={idol.id}></IdolAvatar>
+      </Grid>
+      <Grid item sm={8} xs={11}>
+        <Paper>
+          <Table padding={'dense'}>
+            <TableBody>
+              <TableRow>
+                <TableCell component="th"><strong>卡名</strong></TableCell>
+                <TableCell align="right">{idol.name}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>稀有度</strong></TableCell>
+                <TableCell align="right">{idol.rarity}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>实装日</strong></TableCell>
+                <TableCell align="right">{idol.avail.date}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell component="th"><strong>入手方法</strong></TableCell>
+                <TableCell align="right">{idol.avail.source}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Paper>
+      </Grid>
+
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'主动技能 ライブスキル'}
+          headers={['技能名', '效果', '开放条件']}
+          table={idol.live_skills.map(s => [
+            s.name,
+            <HintText text={s.effect} />,
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              <strong>{e[0]}</strong><br /><br />{e[1]}<br />
+              {e[2] && (<>{e[2]}</>)}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'被动技能 パッシブスキル'}
+          headers={['效果', '条件', '发动概率', '最大', '开放条件']}
+          table={idol.passive_skills.map(s => [
+            <HintText text={s.effect} />,
+            s.condition,
+            s.probability.toString() + '%',
+            s.max_time.toString() + '回',
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              {e[0]}<br /><br />{e[2]} | {e[3]} | {e[1]}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <ResponsiveSkillTable
+          title={'其它技能'}
+          headers={['技能', '效果', '开放条件']}
+          table={idol.other_skills.map(s => [
+            s.name,
+            <HintText text={s.effect} />,
+            s.obtain,
+          ])}
+          smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
+            return <TableRow><TableCell>
+              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />
+              {e[2] && (<>条件: {e[2]}</>)}
+            </TableCell></TableRow>
+          }}
+        />
+      </Grid>
+      <Grid item xs={11}>
+        <Paper>
+          <Hidden xsDown>
+            <Table padding={'dense'}>
+              <TableHead>
+                <TableRow><TableCell align="center" colSpan={6}>事件</TableCell></TableRow>
+                <TableRow>
+                  {['事件名', 'Vocal', 'Dance', 'Visual', 'Mental', 'SP'].map(
+                    (x, index) => <TableCell align="left" key={index}>{x}</TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {idol.events.map((s, index) => (
+                  <TableRow key={index}>
+                    {[s.name, s.vo, s.da, s.vi, s.mental, s.sp].map(
+                      (x, index) => <TableCell key={index}>{x}</TableCell>
+                    )}
+                  </TableRow>
+                ))
+                }
+                <TableRow key={'sumup'}>
+                  {[
+                    '合计',
+                    ...[
+                      idol.meta.events_sum.vo,
+                      idol.meta.events_sum.da,
+                      idol.meta.events_sum.vi,
+                      idol.meta.events_sum.mental,
+                      idol.meta.events_sum.sp,
+                    ].map(positiveOrEmpty)
+                  ].map((x, index) => <TableCell key={index}>{x}</TableCell>)
+                  }
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden smUp>
+            <Table padding={'checkbox'}>
+              <TableHead>
+                <TableRow><TableCell align="center" colSpan={5}>事件</TableCell></TableRow>
+                <TableRow>
+                  {['Vo', 'Da', 'Vi', 'Me', 'SP'].map(
+                    (x, index) => <TableCell key={index}>{x}</TableCell>
+                  )}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {idol.events.map((s, index) => (
+                  <>
+                    <TableRow><TableCell align="center" colSpan={5}>{s.name}</TableCell></TableRow>
+                    <TableRow key={index}>
+                      {[s.vo, s.da, s.vi, s.mental, s.sp].map(
+                        (x, index) => <TableCell key={index}>{x}</TableCell>
+                      )}
+                    </TableRow>
+                  </>
+                ))
+                }
+                <TableRow><TableCell align="center" colSpan={5}>合计</TableCell></TableRow>
+                <TableRow key={'sumup'}>
+                  {[
+                    ...[
+                      idol.meta.events_sum.vo,
+                      idol.meta.events_sum.da,
+                      idol.meta.events_sum.vi,
+                      idol.meta.events_sum.mental,
+                      idol.meta.events_sum.sp,
+                    ].map(positiveOrEmpty)
+                  ].map(x => <TableCell>{x}</TableCell>)
+                  }
+                </TableRow>
+              </TableBody>
+            </Table>
+          </Hidden>
+        </Paper>
+      </Grid>
+      <Grid item xs={11}>
+        <Paper>
+          <Hidden xsDown>
+            <Table padding={'dense'}>
+              <TableHead>
+                <TableRow><TableCell align="center" colSpan={2 + getSupportSkillLevels(idol.rarity).length}>
+                  支援技能 サポートスキル
+                </TableCell></TableRow>
+                <TableRow>
+                  <TableCell align="left">技能</TableCell>
+                  <TableCell align="left">技能效果</TableCell>
+                  {getSupportSkillLevels(idol.rarity).map((x, index) => (
+                    <TableCell align="center" padding="none"
+                      className={classes.tableBorder} key={index}>
+                      {x}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {idol.support_skills.map((s, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{s.name}</TableCell>
+                    <TableCell><HintText text={s.effect} /></TableCell>
+                    {parseSupportSkillList(idol.rarity, s.get_lv, s.lv).map((x, index) => (
+                      <TableCell align="center" padding="none"
+                        className={classes.tableBorder} key={index}>
+                        {x > 0 ? x : ''}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+                }
+              </TableBody>
+            </Table>
+          </Hidden>
+          <Hidden smUp>
+            <Table padding={'none'}>
+              <TableHead>
+                <TableRow><TableCell align="center" colSpan={getSupportSkillLevels(idol.rarity).length}>
+                  支援技能 サポートスキル
+                </TableCell></TableRow>
+                <TableRow>
+                  {/* <TableCell align="left">技能</TableCell>
+                  <TableCell align="left">技能效果</TableCell> */}
+                  {getSupportSkillLevels(idol.rarity).map((x, index) => (
+                    <TableCell align='center' padding='none' key={index}>
+                      {x}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {idol.support_skills.map((s, index) => (
+                  <>
+                    <TableRow><TableCell align='center' colSpan={getSupportSkillLevels(idol.rarity).length}>
+                      {s.effect}
+                    </TableCell></TableRow>
+                    <TableRow key={index}>
+                      {parseSupportSkillList(idol.rarity, s.get_lv, s.lv).map((x, index) => (
+                        <TableCell align='center' padding='none' key={index}>
+                          {x > 0 ? x : ''}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </>
+                ))
+                }
+              </TableBody>
+            </Table>
+          </Hidden>
+        </Paper>
+      </Grid>
+
+    </Grid>
+  )
+}
+
 const IdolPage: React.FunctionComponent<Props> = (props) => {
-  const { currentIdolType, currentIdolID, allIdols } = useAppData();
+  const { currentIdolType, currentIdolID, allIdols, mainScrollToTop } = useAppData();
+  React.useEffect(() => {
+    mainScrollToTop();
+  });
 
   const { classes } = props;
   if (currentIdolType == IdolType.support) {
     const idol = allIdols.s.find(x => x.id == currentIdolID) || allIdols.s[0];
-    // TODO: refactor these ugly codes with array.map
     return (
-      <div>
-        <div className={classes.topInfo}>
-          <div className={classes.avatar}>
-            <IdolAvatar idolType={IdolType.support} idolID={idol.id}></IdolAvatar>
-          </div>
-          <div style={{ width: '10%', float: 'left' }} />
-          <Paper className={classes.basicInfo}>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th"><strong>卡名</strong></TableCell>
-                  <TableCell align="right">{idol.name}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>稀有度</strong></TableCell>
-                  <TableCell align="right">{idol.rarity}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>实装日</strong></TableCell>
-                  <TableCell align="right">{idol.avail.date}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>入手方法</strong></TableCell>
-                  <TableCell align="right">{idol.avail.source_detail}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-          <div style={{ clear: 'both' }} />
-        </div>
-
-        <Paper className={classes.liveSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>主动技能 ライブスキル</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">技能名</TableCell>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">开放条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.live_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-        <Paper className={classes.passiveSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={5}>被动技能 パッシブスキル</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">条件</TableCell>
-                <TableCell align="left">发动概率</TableCell>
-                <TableCell align="left">最大</TableCell>
-                <TableCell align="left">开放条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.passive_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.condition}</TableCell>
-                  <TableCell>{s.probability}%</TableCell>
-                  <TableCell>{s.max_time}回</TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-
-        <Paper className={classes.otherSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>其它技能</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">技能名</TableCell>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.other_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-        <Paper className={classes.eventsInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={6}>事件</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">事件名</TableCell>
-                <TableCell align="left">Vocal</TableCell>
-                <TableCell align="left">Dance</TableCell>
-                <TableCell align="left">Visual</TableCell>
-                <TableCell align="left">Mental</TableCell>
-                <TableCell align="left">SP</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.events.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell>{s.vo || ''}</TableCell>
-                  <TableCell>{s.da || ''}</TableCell>
-                  <TableCell>{s.vi || ''}</TableCell>
-                  <TableCell>{s.mental || ''}</TableCell>
-                  <TableCell>{s.sp || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-              <TableRow key={'sumup'}>
-                <TableCell>{'合计'}</TableCell>
-                <TableCell>{positiveOrEmpty(idol.meta.events_sum.vo)}</TableCell>
-                <TableCell>{positiveOrEmpty(idol.meta.events_sum.da)}</TableCell>
-                <TableCell>{positiveOrEmpty(idol.meta.events_sum.vi)}</TableCell>
-                <TableCell>{positiveOrEmpty(idol.meta.events_sum.mental)}</TableCell>
-                <TableCell>{positiveOrEmpty(idol.meta.events_sum.sp)}</TableCell>                
-              </TableRow>
-            </TableBody>
-          </Table>
-        </Paper>
-
-        <Paper className={classes.supportSkillInfo}>
-          <Table>
-            <TableHead style={{ tableLayout: 'fixed' }}>
-              <TableRow><TableCell align="center" colSpan={2 + supportSkillLevels.length}>
-                支援技能 サポートスキル
-              </TableCell></TableRow>
-              <TableRow style={{ width: '10%' }}>
-                <TableCell align="left">技能</TableCell>
-                <TableCell align="left">技能效果</TableCell>
-                {supportSkillLevels.map((x, index) => (
-                  <TableCell align="center" padding="none" className={classes.supportSkillLevelCol} key={index}>
-                    {x}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.support_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  {parseSupportSkillList(s.get_lv, s.lv).map((x, index) => (
-                    <TableCell align="center" padding="none" className={classes.supportSkillLevelCol} key={index}>
-                      {x > 0 ? x : ''}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
+      <SupportIdolPage idol={idol} classes={classes} />
     )
   } else {
     const idol = allIdols.p.find(x => x.id == currentIdolID) || allIdols.p[0];
     return (
-      <div>
-        <div className={classes.topInfo}>
-          <div className={classes.avatar}>
-            <IdolAvatar idolType={IdolType.produce} idolID={idol.id}></IdolAvatar>
-          </div>
-          <div style={{ width: '10%', float: 'left' }} />
-          <Paper className={classes.basicInfo}>
-            <Table>
-              <TableBody>
-                <TableRow>
-                  <TableCell component="th"><strong>卡名</strong></TableCell>
-                  <TableCell align="right">{idol.name}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>稀有度</strong></TableCell>
-                  <TableCell align="right">{idol.rarity}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>实装日</strong></TableCell>
-                  <TableCell align="right">{idol.avail.date}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th"><strong>入手方法</strong></TableCell>
-                  <TableCell align="right">{idol.avail.source}</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </Paper>
-          <div style={{ clear: 'both' }} />
-        </div>
-
-        <Paper className={classes.liveSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={4}>主动技能 ライブスキル</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">技能名</TableCell>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">Link效果</TableCell>
-                <TableCell align="left">开放条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.live_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell><HintText text={s.link} /></TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-        <Paper className={classes.passiveSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={5}>被动技能 パッシブスキル</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">条件</TableCell>
-                <TableCell align="left">发动概率</TableCell>
-                <TableCell align="left">最大</TableCell>
-                <TableCell align="left">开放条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.passive_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.condition}</TableCell>
-                  <TableCell>{s.probability}%</TableCell>
-                  <TableCell>{s.max_time}回</TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-
-        <Paper className={classes.otherSkillInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>其它技能</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">技能</TableCell>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">开放条件</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.other_skills.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell>{s.obtain || ''}</TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-
-        <Paper className={classes.omoideInfo}>
-          <Table>
-            <TableHead>
-              <TableRow><TableCell align="center" colSpan={3}>回忆炸弹 思い出アピール</TableCell></TableRow>
-              <TableRow>
-                <TableCell align="left">LV</TableCell>
-                <TableCell align="left">效果</TableCell>
-                <TableCell align="left">Link效果</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {idol.omoide.map((s, index) => (
-                <TableRow key={index}>
-                  <TableCell>{s.name}</TableCell>
-                  <TableCell><HintText text={s.effect} /></TableCell>
-                  <TableCell><HintText text={s.link} /></TableCell>
-                </TableRow>
-              ))
-              }
-            </TableBody>
-          </Table>
-        </Paper>
-      </div>
+      <ProduceIdolPage idol={idol} classes={classes} />
     )
   }
 }

@@ -34,6 +34,7 @@ const appDataOperator = {
   gotoIdolPage: (typ: IdolType, id: number) => { },
   setTab: (v: string) => { },
   resetFilter: (typ: IdolType) => { },
+  mainScrollToTop: () => {},
 }
 
 const AppDataContext = React.createContext(appDataOperator);
@@ -85,6 +86,12 @@ export class AppDataProvider extends React.PureComponent<AppDataContentProps, Ap
         this.setState({
           allIdols: idols,
         })
+        // FOR DEBUG
+        // this.setState({
+        //   tab: GlobalTabs.idol,
+        //   currentIdolID: 100,
+        //   currentIdolType: IdolType.support,
+        // })
         this.applyFilter()
       }
       ).catch(err =>
@@ -117,7 +124,10 @@ export class AppDataProvider extends React.PureComponent<AppDataContentProps, Ap
           tab: GlobalTabs.idol,
           lastTab: prevState.tab,
         }));
-        this.props.mainScrollToTop();
+        //this.props.mainScrollToTop();
+      },
+      mainScrollToTop: () => {
+        this.props.mainScrollToTop()
       },
       setTab: (v: string) => {
         this.setState((prevState) => ({
