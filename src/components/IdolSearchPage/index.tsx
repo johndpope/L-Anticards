@@ -286,7 +286,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
         open={liveSkillSelectOpen}
         onClose={closeLiveSkillSelect}
       >
-        <DialogTitle>神说要有主动技能</DialogTitle>
+        <DialogTitle>主动技能</DialogTitle>
         <DialogContent>
           <RadioGroup
             value={filter.liveSkill}
@@ -313,7 +313,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
         open={passiveSkillSelectOpen}
         onClose={closePassiveSkillSelect}
       >
-        <DialogTitle>神说也要有被动技能</DialogTitle>
+        <DialogTitle>被动技能</DialogTitle>
         <DialogContent>
           <RadioGroup
             value={filter.passiveSkill}

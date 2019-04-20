@@ -16,7 +16,7 @@ export interface ProduceIdol {
   }>;
   'passive_skills': Array<{
     'effect': string;
-    'probability': number;
+    'probability': number | string;
     'max_time': number;
     'condition': string;
     'obtain'?: string,
@@ -73,7 +73,7 @@ export interface SupportIdol {
   }>;
   'passive_skills': Array<{
     'effect': string;
-    'probability': number;
+    'probability': number | string;
     'max_time': number;
     'condition': string;
     'obtain'?: string;

@@ -167,7 +167,7 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
           table={idol.passive_skills.map(s => [
             <HintText text={s.effect} />,
             s.condition,
-            s.probability.toString() + '%',
+            typeof s.probability === 'number' ? s.probability.toString() + '%': s.probability,
             s.max_time.toString() + '回',
             s.obtain,
           ])}
@@ -271,7 +271,7 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
           table={idol.passive_skills.map(s => [
             <HintText text={s.effect} />,
             s.condition,
-            s.probability.toString() + '%',
+            typeof s.probability === 'number' ? s.probability.toString() + '%': s.probability,
             s.max_time.toString() + '回',
             s.obtain,
           ])}
