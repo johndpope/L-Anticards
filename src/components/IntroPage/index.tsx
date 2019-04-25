@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 
-import haitaiImage from '../../asserts/haitai2.jpg';
+import haitaiImage from '../../assets/haitai2.jpg';
 import { Link } from '@material-ui/core';
 
 const styles = (theme: Theme) => createStyles({
@@ -80,7 +80,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
           </div>
         </div> */}
         <Grid container spacing={40} className={classes.mainGrid}>
-            <Hidden xsDown>
+            {/* <Hidden xsDown>
               <Grid container justify={'center'}>
                 <img src={haitaiImage} alt={'ryu3'} style={{
                   maxWidth: '80%',
@@ -88,7 +88,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
                   objectFit: 'none',
                 }}/>
               </Grid>
-            </Hidden>
+            </Hidden> */}
             <Hidden smUp>
               <Grid container justify={'center'}>
                 <Typography component="h1" variant="h5" color='inherit' noWrap>
