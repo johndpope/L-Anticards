@@ -117,6 +117,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Divider />
               <Typography paragraph>
                 <ul>
+                  <li>2019-04-26，换数据源和数据结构</li>
                   <li>2019-04-11，适配窄屏</li>
                   <li>2019-04-03，修复：回忆炸弹3, 4级效果缺失</li>
                   <li>2019-03-29，更新主页、技能效果染色、名词说明</li>

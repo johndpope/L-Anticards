@@ -31,7 +31,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IdolAvatar from '../IdolAvatar';
 
 import { useAppData } from '../../context/AppData';
-import { IdolType, Strength, membersList, unitsList, strengthsList, liveSkillsList, passiveSkillList } from '../../common/type';
+import { IdolType, membersList, unitsList, strengthsList, liveSkillsList, passiveSkillList, getActiveSkills } from '../../common/type';
 import { IdolView } from '../../common/filter';
 import { useToggle } from '../../hooks/gadget';
 import { liveSkillText, passiveSkillText } from '../../common/text';
@@ -136,6 +136,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
   const page = filter.listPage
   const rowsPerPage = filter.listRowPerPage
   const idolsNum = (idolType === IdolType.support) ? supportIdols.length : produceIdols.length;
+  
   return (
     <Table className={classes.idolList}>
       <TableBody>
@@ -150,7 +151,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map((s, index) => (<TableRow key={index}><HintText text={s.effect} /></TableRow>))}
+                {getActiveSkills(idol).map((s, index) => (<TableRow key={index}><HintText text={s.comment} /></TableRow>))}
               </TableCell>
             </TableRow>
           ))
@@ -166,7 +167,7 @@ const IdolList: React.FunctionComponent<Props> = (props) => {
                 <TableRow>{idol.rarity}</TableRow>
               </TableCell>
               <TableCell scope="row" style={{ width: '30%' }}>
-                {idol.live_skills.map((s, index) => (<TableRow key={index}><HintText text={s.effect} /></TableRow>))}
+                {getActiveSkills(idol).map((s, index) => (<TableRow key={index}><HintText text={s.comment} /></TableRow>))}
               </TableCell>
             </TableRow>
           ))
@@ -230,7 +231,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
                   onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                     setFilter(idolType, {
                       ...filter,
-                      strengths: event.target.value as any as Strength[],
+                      strengths: event.target.value as any as string[],
                     });
                   }}
                   input={<Input id="select-multiple-chip" />}

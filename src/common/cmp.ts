@@ -1,14 +1,6 @@
-import { Rarity } from './type';
+import { Rarity, IIdol } from './type';
 
-interface IIdol {
-  id: number;
-  rarity: Rarity;
-  meta: {
-    idol_id: number;
-  }
-}
-
-const rarityValue = (r: Rarity) => {
+const rarityId = (r: Rarity) => {
   switch (r) {
     case 'SSR': return 4;
     case 'SR': return 3;
@@ -19,7 +11,7 @@ const rarityValue = (r: Rarity) => {
 }
 
 const cmpRarity = (a: Rarity, b: Rarity) => {
-  return rarityValue(b) - rarityValue(a);
+  return rarityId(b) - rarityId(a);
 }
 
 export const defaultCmp = (a: IIdol, b: IIdol) => {
@@ -27,7 +19,7 @@ export const defaultCmp = (a: IIdol, b: IIdol) => {
   if (r !== 0) {
     return r;
   }
-  r = a.meta.idol_id - b.meta.idol_id;
+  r = a.character.id - b.character.id;
   if (r !== 0) {
     return r;
   }
