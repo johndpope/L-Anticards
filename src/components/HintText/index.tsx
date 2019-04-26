@@ -62,7 +62,11 @@ const HintText: React.FC<{ text: string }> = (props) => {
     .split(replaceRegex)
     .map((x => {
       if (x in replaceText) {
-        let el = (<span style={{color: replaceText[x].color}}><strong> {x} </strong></span>);
+        let el = (
+          <span style={{color: replaceText[x].color}}>
+            <strong> {replaceText[x].hint != null ? (<u>{x}</u>) : x} </strong>
+          </span>
+        );
         if (replaceText[x].hint != null) {
           el = <MouseOverPopover text={replaceText[x].hint as string}>{el}</MouseOverPopover>
         }
