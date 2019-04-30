@@ -10,7 +10,6 @@ export interface IIdol {
   };
   'avail': {
     'date': string;
-    'source': string;
     'sourceType': string;
   };
   'skillPanels': Skill[];
@@ -84,9 +83,9 @@ export interface SupportIdol extends IIdol {
   };
   'supportSkills': Array<{
     'name': string;
-    'effect': string;
-    'get_lv': number[];
-    'lv': number[];
+    'description': string;
+    'levels': number[];
+    'values': number[];
   }>;
 }
 

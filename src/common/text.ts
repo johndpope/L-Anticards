@@ -6,7 +6,7 @@ const skillEffectTextDict: { [key: string]: string } = {
   'memory_appeal_point_favorable_damage': '展示【回忆槽越高伤害越高】',
   'appeal_up': 'Vo/Da/Vi UP',
   'appeal_down': 'Vo/Da/Vi DOWN',
-  'rival_appeal_down': '敌人 Vo/Da/Vi Down',
+  'rival_appeal_down': '对手 Vo/Da/Vi Down',
   'mental_damage_down': 'mental伤害降低',
   'mental_damage_up': 'mental伤害上升',
   'attention_down': '注目度DOWN',

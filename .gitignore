@@ -27,4 +27,4 @@ yarn-error.log*
 
 # static
 /public/image
-/public/static.json
+/public/static*.json

@@ -7,8 +7,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 
-import haitaiImage from '../../assets/haitai2.jpg';
-import { Link } from '@material-ui/core';
+import Link from '@material-ui/core/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 const styles = (theme: Theme) => createStyles({
   // tubaro: {
@@ -134,15 +134,6 @@ const IntroPage = withStyles(styles)((props: Props) => {
             </Grid>
             {/* Sidebar */}
             <Grid item xs={12} md={4}>
-              {/* <Paper elevation={0} className={classes.sidebarAboutBox}>
-                <Typography variant="h6" gutterBottom>
-                  About
-                </Typography>
-                <Typography>
-                  Etiam porta sem malesuada magna mollis euismod. Cras mattis consectetur purus sit
-                  amet fermentum. Aenean lacinia bibendum nulla sed consectetur.
-                </Typography>
-              </Paper> */}
               <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
                 建议/Bug 报告
               </Typography>
@@ -152,12 +143,17 @@ const IntroPage = withStyles(styles)((props: Props) => {
               <Typography>
                 <Link href='https://github.com/kannpro/L-Anticards/issues' target='_blank' rel="noopener">Github Issue</Link>
               </Typography>
-              {/* <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-                Social
+              <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
+                链接
               </Typography>
-              {['s1', 's2', 's3'].map(network => (
-                <Typography key={network}>{network}</Typography>
-              ))} */}
+              <Typography>
+                <Link href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">Github</Link>
+              </Typography>
+              <Typography>
+                <Link component={(props) => <RouterLink to='/statistics' {...props}/>}>
+                  统计
+                </Link>
+              </Typography>
             </Grid>
           </Grid>
     </main>

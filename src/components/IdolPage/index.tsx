@@ -45,12 +45,12 @@ const getSupportSkillLevels = (rarity: Rarity) => {
   }
 }
 
-const parseSupportSkillList = (rarity: Rarity, get_lv: number[], lv: number[]) => {
+const parseSupportSkillList = (rarity: Rarity, obtainLevels: number[], values: number[]) => {
   let levels = getSupportSkillLevels(rarity);
 
-  const s = get_lv.reduce((acc, x, index) => (Math.max(acc, x <= levels[0] ? lv[index] : 0)), 0)
+  const s = obtainLevels.reduce((acc, x, index) => (Math.max(acc, x <= levels[0] ? values[index] : 0)), 0)
   return levels.slice(1).reduce((acc, cur) => acc.concat(
-    lv[get_lv.findIndex(x => x == cur)] || 0
+    values[obtainLevels.findIndex(x => x == cur)] || 0
   ), [s])
 };
 
@@ -398,8 +398,8 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
                 {idol.supportSkills.map((s, index) => (
                   <TableRow key={index}>
                     <TableCell>{s.name}</TableCell>
-                    <TableCell><HintText text={s.effect} /></TableCell>
-                    {parseSupportSkillList(idol.rarity, s.get_lv, s.lv).map((x, index) => (
+                    <TableCell><HintText text={s.description} /></TableCell>
+                    {parseSupportSkillList(idol.rarity, s.levels, s.values).map((x, index) => (
                       <TableCell align="center" padding="none"
                         className={classes.tableBorder} key={index}>
                         {x > 0 ? x : ''}
@@ -431,10 +431,10 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
                 {idol.supportSkills.map((s, index) => (
                   <>
                     <TableRow><TableCell align='center' colSpan={getSupportSkillLevels(idol.rarity).length}>
-                      {s.effect}
+                      <HintText text={s.description} />
                     </TableCell></TableRow>
                     <TableRow key={index}>
-                      {parseSupportSkillList(idol.rarity, s.get_lv, s.lv).map((x, index) => (
+                      {parseSupportSkillList(idol.rarity, s.levels, s.values).map((x, index) => (
                         <TableCell align='center' padding='none' key={index}>
                           {x > 0 ? x : ''}
                         </TableCell>

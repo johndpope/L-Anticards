@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { defaultProduceFilter, defualtSupportFilter, IdolFilter, defaultTab, GlobalTabs } from '../../common/filter';
 import { applySupportFilter, applyProduceFilter } from '../../common/filter';
 import { SupportIdol, AllIdolList, emptyIdolList, ProduceIdol, IdolType } from '../../common/type';
+import { STATIC_IDOL_FILE } from '../../common/constants';
 
 const currentAppData = {
   // Idol list
@@ -79,7 +80,7 @@ export class AppDataProvider extends React.PureComponent<AppDataContentProps, Ap
   }
 
   componentDidMount() {
-    fetch('./static.json')
+    fetch(STATIC_IDOL_FILE)
       .then(resp => resp.json())
       .then(resp => {
         const idols: AllIdolList = resp;

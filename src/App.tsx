@@ -2,6 +2,8 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import { MuiThemeProvider, withStyles, createStyles, createMuiTheme, Theme, WithStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -30,6 +32,7 @@ import IdolPage from './components/IdolPage'
 import { IdolType } from './common/type';
 import { GlobalTabs } from './common/filter';
 import IntroPage from './components/IntroPage';
+import IdolStatistics from './components/IdolStatistics';
 
 var classNames = require('classnames');
 
@@ -247,8 +250,17 @@ const App = withStyles(styles)((props: Props) => {
   );
 });
 
+const AppContainer = () => {
+  return (
+    <MuiThemeProvider theme={anticaTheme}>
+      <App />
+    </MuiThemeProvider>
+  )
+}
+
 export default () => (
-  <MuiThemeProvider theme={anticaTheme}>
-    <App />
-  </MuiThemeProvider>
+  <Router>
+    <Route path = '/' exact component={AppContainer} />
+    <Route path = '/statistics/' component={IdolStatistics} />
+  </Router>
 );
