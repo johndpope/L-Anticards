@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { AllIdolList, emptyIdolList, membersList } from '../../common/type';
-import { STATIC_IDOL_FILE } from '../../common/constants';
+import { STATIC_IDOL_FILE_JA } from '../../common/constants';
 
 
 export default () => {
   const [idols, setIdols] = useState(emptyIdolList);
   useEffect(() => {
-    fetch(STATIC_IDOL_FILE)
+    fetch(STATIC_IDOL_FILE_JA)
       .then(resp => resp.json())
       .then(resp => {
         const r: AllIdolList = resp;

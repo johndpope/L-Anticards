@@ -4,8 +4,9 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
+import { useAppData } from '../../context/AppData';
 
-
+// TODO: refactor these fxxking ugly codes
 const MouseOverPopover: React.FC<{ text: string }> = (props) => {
   const [anchor, setAnchor] = useState<HTMLDivElement | null>(null);
 
@@ -42,7 +43,7 @@ const MouseOverPopover: React.FC<{ text: string }> = (props) => {
   )
 }
 
-const replaceText: { [v: string]: {'hint': string | null, 'color': string} } = {
+const replaceTextZH: { [v: string]: {'hint': string | null, 'color': string} } = {
   'Vocal': {'hint': null, 'color':'#F959DA'},
   'Dance': {'hint': null, 'color':'#1CAEFF'},
   'Visual': {'hint': null, 'color': '#FADB1A'},
@@ -54,10 +55,37 @@ const replaceText: { [v: string]: {'hint': string | null, 'color': string} } = {
   '忧郁': {'hint': 'メランコリー効果：展示阶段开始时受到mental伤害', 'color': '#20BA03'},
 }
 
-const replaceRegex = /(Vocal)|(Dance)|(Visual)|(SP)|(mental)|(兴趣)|(注目度)|(影响力)|(忧郁)/g;
+const replaceTextJA: { [v: string]: {'hint': string | null, 'color': string} } = {
+  'Vocal': {'hint': null, 'color':'#F959DA'},
+  'Dance': {'hint': null, 'color':'#1CAEFF'},
+  'Visual': {'hint': null, 'color': '#FADB1A'},
+  'SP': {'hint': null, 'color': '#FA7F1F'},
+  'メンタル': {'hint': null, 'color': '#AF4CEB'},
+  '興味': {'hint': null, 'color': '#20BA03'},
+  '注目度': {'hint': null, 'color': '#20BA03'},
+  '影響力': {'hint': null, 'color': '#20BA03'},
+  'メランコリー': {'hint': null, 'color': '#20BA03'},
+}
+
+const replaceRegexZH = /(Vocal)|(Dance)|(Visual)|(SP)|(mental)|(兴趣)|(注目度)|(影响力)|(忧郁)/g;
+const replaceRegexJA = /(Vocal)|(Dance)|(Visual)|(SP)|(メンタル)|(興味)|(注目度)|(影響力)|(メランコリー)/g;
 
 const HintText: React.FC<{ text: string }> = (props) => {
+  const { lang } = useAppData();
   const { text } = props;
+  let replaceRegex;
+  let replaceText: typeof replaceTextZH;
+  if (lang === 'zh') {
+    replaceRegex = replaceRegexZH;
+    replaceText = replaceTextZH;
+  } else if (lang === 'ja') {
+    replaceRegex = replaceRegexJA;
+    replaceText = replaceTextJA;
+  } else {
+    return (
+      <>{text}</>
+    )
+  }
   const hinted = text
     .split(replaceRegex)
     .map((x => {

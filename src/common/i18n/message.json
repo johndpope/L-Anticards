@@ -1,0 +1,223 @@
+{
+    "idolCardName": {
+        "zh": "卡名",
+        "ja": "ネーム"
+    },
+    "idolRarity": {
+        "zh": "稀有度",
+        "ja": "レア度"
+    },
+    "idolReleastDate": {
+        "zh": "实装日",
+        "ja": "実装日"
+    },
+    "idolObtainSource": {
+        "zh": "入手方法",
+        "ja": "入手方法"
+    },
+    "activeSkill": {
+        "zh": "主动技能",
+        "ja": "ライブスキル"
+    },
+    "passiveSkill": {
+        "zh": "被动技能",
+        "ja": "パッシブスキル"
+    },
+    "launchCondition": {
+        "zh": "发动条件",
+        "ja": "条件"
+    },
+    "launchRate": {
+        "zh": "发动概率",
+        "ja": "確率"
+    },
+    "skillMaxTime": {
+        "zh": "最多",
+        "ja": "最大"
+    },
+    "limitBreakSkill": {
+        "zh": "上限解放",
+        "ja": "上限解放"
+    },
+    "supportSkill": {
+        "zh": "支援技能",
+        "ja": "サポートスキル"
+    },
+    "supportEvent": {
+        "zh": "支援事件",
+        "ja": "サポートイベント"
+    },
+    "skillName": {
+        "zh": "技能",
+        "ja": "スキル"
+    },
+    "skillEffect": {
+        "zh": "效果",
+        "ja": "効果"
+    },
+    "linkEffect": {
+        "zh": "Link效果",
+        "ja": "Link効果"
+    },
+    "obtainCondition": {
+        "zh": "开放条件",
+        "ja": "開放条件"
+    },
+    "condition": {
+        "zh": "条件",
+        "ja": "条件"
+    },
+    "times": {
+        "zh": "次",
+        "ja": "回"
+    },
+    "memorialAppeal": {
+        "zh": "回忆炸弹",
+        "ja": "思い出アピール"
+    },
+    "lv": {
+        "zh": "LV",
+        "ja": "LV"
+    },
+    "vocal": {
+        "zh": "Vocal",
+        "ja": "Vocal"
+    },
+    "dance": {
+        "zh": "Dance",
+        "ja": "Dance"
+    },
+    "visual": {
+        "zh": "Visual",
+        "ja": "Visual"
+    },
+    "mental": {
+        "zh": "mental",
+        "ja": "メンタル"
+    },
+    "sp": {
+        "zh": "SP",
+        "ja": "SP"
+    },
+    "sumup": {
+        "zh": "合计",
+        "ja": "合計"
+    },
+    "eventName": {
+        "zh": "事件名",
+        "ja": "イベントネーム"
+    },
+    "reset": {
+        "zh": "重置",
+        "ja": "リセット"
+    },
+
+    "skillType_none": {
+        "zh": "无限制",
+        "ja": "すべて"
+    },
+    "skillType_damage": {
+        "zh": "展示",
+        "ja": "アピール"
+    },
+    "skillType_memory_appeal_damage": {
+        "zh": "回忆炸弹",
+        "ja": "思い出アピール"
+    },
+    "skillType_mental_favorable_damage": {
+        "zh": "浑身【mental越高伤害越高】",
+        "ja": "アピール[メンタルが多いほど効果UP]"
+    },
+    "skillType_mental_unfavorable_damage": {
+        "zh": "背水【mental越低伤害越高】",
+        "ja": "アピール[メンタルが少ないほど効果UP]"
+    },
+    "skillType_memory_appeal_point_favorable_damage": {
+        "zh": "展示【回忆槽越高伤害越高】",
+        "ja": "アピール[思い出ゲージが多いほど効果UP]"
+    },
+    "skillType_appeal_up": {
+        "zh": "Vo/Da/Vi UP",
+        "ja": "Vo/Da/Vi UP"
+    },
+    "skillType_appeal_down": {
+        "zh": "Vo/Da/Vi DOWN",
+        "ja": "Vo/Da/Vi DOWN"
+    },
+    "skillType_rival_appeal_down": {
+        "zh": "对手 Vo/Da/Vi Down",
+        "ja": "ライバル Vo/Da/Vi Down"
+    },
+    "skillType_mental_damage_down": {
+        "zh": "mental伤害降低",
+        "ja": "メンタルダメージCUT"
+    },
+    "skillType_mental_damage_up": {
+        "zh": "mental伤害上升",
+        "ja": "メンタルダメージUP"
+    },
+    "skillType_attention_down": {
+        "zh": "注目度DOWN",
+        "ja": "注目度DOWN"
+    },
+    "skillType_attention_up": {
+        "zh": "注目度UP",
+        "ja": "注目度DOWN"
+    },
+    "skillType_interest_down": {
+        "zh": "兴趣DOWN",
+        "ja": "興味DOWN"
+    },
+    "skillType_interest_up": {
+        "zh": "兴趣UP",
+        "ja": "興味UP"
+    },
+    "skillType_judge_attack_down": {
+        "zh": "影响力DOWN",
+        "ja": "影響力DOWN"
+    },
+    "skillType_judge_attack_up": {
+        "zh": "影响力UP",
+        "ja": "影響力UP"
+    },
+    "skillType_mental": {
+        "zh": "mental恢复",
+        "ja": "メンタル回復"
+    },
+    "skillType_regenerate": {
+        "zh": "mental恢复【多回合】",
+        "ja": "メンタル回復[ターン]"
+    },
+    "skillType_slip_damage": {
+        "zh": "忧郁",
+        "ja": "メランコリー"
+    },
+    "skillType_hp_proportion_damage": {
+        "zh": "自身mental减少",
+        "ja": "メンタルを減らす"
+    },
+    "skillType_memory_appeal_gauge_bonus": {
+        "zh": "回忆槽上升",
+        "ja": "思い出ゲージUP"
+    },
+    "skillType_memory_appeal_gauge_down": {
+        "zh": "回忆槽下降",
+        "ja": "思い出ゲージDOWN"
+    },
+    "skillType_probability_blow": {
+        "zh": "瞬杀",
+        "ja": "興味値一気に満足させる"
+    },
+    "skillType_fastest_appeal": {
+        "zh": "最先行动",
+        "ja": "必ず最初"
+    },
+    "skillType_slowest_appeal": {
+        "zh": "最后行动",
+        "ja": "必ず最後"
+    },
+    "skillType_reraise": {
+        "zh": "复活",
+        "ja": "復活"
+    }
+}

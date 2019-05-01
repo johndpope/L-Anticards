@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 
 import { MuiThemeProvider, withStyles, createStyles, createMuiTheme, Theme, WithStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route, Link as RouterLink, withRouter } from 'react-router-dom';
@@ -14,11 +15,15 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import LocalParkingIcon from '@material-ui/icons/LocalParking';
+import LanguageIcon from '@material-ui/icons/Language';
 import Home from '@material-ui/icons/Home';
 import Link from '@material-ui/core/Link';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Hidden from '@material-ui/core/Hidden';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
@@ -33,6 +38,7 @@ import { GlobalTabs } from './common/filter';
 import IntroPage from './components/IntroPage';
 import IdolStatistics from './components/IdolStatistics';
 import { toIntro, toProduce, toSupport } from './common/route';
+import { supportedLanguage } from './common/i18n/i18n';
 
 var classNames = require('classnames');
 
@@ -135,6 +141,29 @@ const styles = (theme: Theme) => createStyles({
 interface Props extends WithStyles<typeof styles> {
 }
 
+const LanguageButton = withStyles(styles)((props: Props) => {
+  const { lang, setLang } = useAppData();
+  const [anchorEl, setAnchorEl] = useState(null as HTMLElement | null);
+  const onClose = () => { setAnchorEl(null); }
+  return (
+    <>
+      <IconButton color="inherit" onClick={(e) => setAnchorEl(e.currentTarget)}>
+        <LanguageIcon />
+      </IconButton>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose} >
+        {
+          Object.keys(supportedLanguage).map((v, index) => (
+            <MenuItem key={index} selected={v === lang} onClick={() => {
+              setLang(v);
+              onClose();
+            }}>{supportedLanguage[v]}</MenuItem>
+          ))
+        }
+      </Menu>
+    </>
+  )
+});
+
 const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
   const [teamDrawerOpen, OpenTeamDrawer, CloseTeamDrawer] = useToggle(false);
   const { classes } = props;
@@ -186,11 +215,10 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
         <Typography color="inherit" className={classes.typeTab}>
           <TabList />
         </Typography>
+        <LanguageButton />
         <Hidden xsDown>
           <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">
-            <Badge badgeContent={null} color="secondary">
-              <LocalParkingIcon />
-            </Badge>
+            <LocalParkingIcon />
           </IconButton>
         </Hidden>
       </Toolbar>
@@ -216,7 +244,6 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
 const ContentContainer = withStyles(styles)((props: Props) => {
   return (
     <div>
-      
       <Route path={toIntro} exact component={IntroPage} />
       <Route path={toProduce} component={() => <IdolSearchPage idolType={IdolType.produce}/>} />
       <Route path={toSupport} component={() => <IdolSearchPage idolType={IdolType.support}/>} />

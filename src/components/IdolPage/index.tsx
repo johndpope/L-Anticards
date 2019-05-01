@@ -113,6 +113,7 @@ const ResponsiveSkillTable: React.FC<{
 }
 
 const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
+  const { i18nMsg } = useAppData();
   const { classes, idol } = props;
   return (
     <Grid container className={classes.mainGrid} justify={'center'} spacing={16}>
@@ -124,19 +125,19 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
           <Table padding={'dense'}>
             <TableBody>
               <TableRow>
-                <TableCell component="th"><strong>卡名</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolCardName')}</strong></TableCell>
                 <TableCell align="right">{idol.name}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>稀有度</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolRarity')}</strong></TableCell>
                 <TableCell align="right">{idol.rarity}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>实装日</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolReleastDate')}</strong></TableCell>
                 <TableCell align="right">{idol.avail.date}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>入手方法</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolObtainSource')}</strong></TableCell>
                 <TableCell align="right">{idol.avail.sourceType}</TableCell>
               </TableRow>
             </TableBody>
@@ -146,8 +147,8 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
 
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'主动技能 ライブスキル'}
-          headers={['技能名', '效果', 'Link效果', '开放条件']}
+          title={i18nMsg('activeSkill')}
+          headers={['skillName', 'skillEffect', 'linkEffect', 'obtainCondition'].map(i18nMsg)}
           table={getActiveSkills(idol).map(s => [
             s.name,
             <HintText text={s.comment} />,
@@ -156,21 +157,21 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
             return <TableRow><TableCell>
-              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />LINK: {e[2]}<br />
-              {e[3] && (<>条件: {e[3]}</>)}
+              <strong>{e[0]}</strong><br /><br />{i18nMsg('skillEffect')}:{e[1]}<br />LINK: {e[2]}<br />
+              {e[3] && (<>{i18nMsg('condition')}: {e[3]}</>)}
             </TableCell></TableRow>
           }}
         />
       </Grid>
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'被动技能 パッシブスキル'}
-          headers={['效果', '条件', '发动概率', '最大', '开放条件']}
+          title={i18nMsg('passiveSkill')}
+          headers={['skillEffect', 'condition', 'launchRate', 'skillMaxTime', 'obtainCondition'].map(i18nMsg)}
           table={getPassiveSkills(idol).map(s => [
             <HintText text={s.name} />,
             s.conditionComment,
             s.rateComment,
-            s.limit.toString() + '回',
+            s.limit.toString() + i18nMsg('times'),
             s.releaseConditions,
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
@@ -182,8 +183,8 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
       </Grid>
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'上限解放'}
-          headers={['技能', '效果', '开放条件']}
+          title={i18nMsg('limitBreakSkill')}
+          headers={['skillName', 'skillEffect', 'obtainCondition'].map(i18nMsg)}
           table={getLimitBreakSkills(idol).map(s => [
             s.name,
             <HintText text={s.comment} />,
@@ -191,16 +192,16 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
             return <TableRow><TableCell>
-              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />
-              {e[2] && (<>条件: {e[2]}</>)}
+              <strong>{e[0]}</strong><br /><br />{i18nMsg('skillEffect')}:{e[1]}<br />
+              {e[2] && (<>{i18nMsg('condition')}: {e[2]}</>)}
             </TableCell></TableRow>
           }}
         />
       </Grid>
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'回忆炸弹 思い出アピール'}
-          headers={['LV', '效果', 'Link效果']}
+          title={i18nMsg('memorialAppeal')}
+          headers={['lv', 'skillEffect', 'linkEffect'].map(i18nMsg)}
           table={idol.memoryAppeals.map(s => [
             s.name,
             <HintText text={s.comment} />,
@@ -208,7 +209,7 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
             return <TableRow><TableCell>
-              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />LINK: {e[2]}
+              <strong>{e[0]}</strong><br /><br />{i18nMsg('skillEffect')}:{e[1]}<br />LINK: {e[2]}
             </TableCell></TableRow>
           }}
         />
@@ -218,6 +219,7 @@ const ProduceIdolPage: React.FC<Props & { idol: ProduceIdol }> = (props) => {
 }
 
 const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
+  const { i18nMsg } = useAppData();
   const { classes, idol } = props;
   return (
     <Grid container className={classes.mainGrid} justify={'center'} spacing={16}>
@@ -229,19 +231,19 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
           <Table padding={'dense'}>
             <TableBody>
               <TableRow>
-                <TableCell component="th"><strong>卡名</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolCardName')}</strong></TableCell>
                 <TableCell align="right">{idol.name}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>稀有度</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolRarity')}</strong></TableCell>
                 <TableCell align="right">{idol.rarity}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>实装日</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolReleastDate')}</strong></TableCell>
                 <TableCell align="right">{idol.avail.date}</TableCell>
               </TableRow>
               <TableRow>
-                <TableCell component="th"><strong>入手方法</strong></TableCell>
+                <TableCell component="th"><strong>{i18nMsg('idolObtainSource')}</strong></TableCell>
                 <TableCell align="right">{idol.avail.sourceType}</TableCell>
               </TableRow>
             </TableBody>
@@ -251,8 +253,8 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
 
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'主动技能 ライブスキル'}
-          headers={['技能名', '效果', '开放条件']}
+          title={i18nMsg('activeSkill')}
+          headers={['skillName', 'skillEffect', 'obtainCondition'].map(i18nMsg)}
           table={getActiveSkills(idol).map(s => [
             s.name,
             <HintText text={s.comment} />,
@@ -268,13 +270,13 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
       </Grid>
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'被动技能 パッシブスキル'}
-          headers={['效果', '条件', '发动概率', '最大', '开放条件']}
+          title={i18nMsg('passiveSkill')}
+          headers={['skillEffect', 'condition', 'launchRate', 'skillMaxTime', 'obtainCondition'].map(i18nMsg)}
           table={getPassiveSkills(idol).map(s => [
             <HintText text={s.name} />,
             s.conditionComment,
             s.rateComment,
-            s.limit.toString() + '回',
+            s.limit.toString() + i18nMsg('times'),
             s.releaseConditions,
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
@@ -286,8 +288,8 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
       </Grid>
       <Grid item xs={11}>
         <ResponsiveSkillTable
-          title={'上限解放'}
-          headers={['技能', '效果', '开放条件']}
+          title={i18nMsg('limitBreakSkill')}
+          headers={['skillName', 'skillEffect', 'obtainCondition'].map(i18nMsg)}
           table={getLimitBreakSkills(idol).map(s => [
             s.name,
             <HintText text={s.comment} />,
@@ -295,8 +297,8 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
           ])}
           smRender={(e: (JSX.Element | string | undefined)[], index: number) => {
             return <TableRow><TableCell>
-              <strong>{e[0]}</strong><br /><br />效果:{e[1]}<br />
-              {e[2] && (<>条件: {e[2]}</>)}
+              <strong>{e[0]}</strong><br /><br />{i18nMsg('skillEffect')}:{e[1]}<br />
+              {e[2] && (<>{i18nMsg('condition')}: {e[2]}</>)}
             </TableCell></TableRow>
           }}
         />
@@ -306,9 +308,9 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
           <Hidden xsDown>
             <Table padding={'dense'}>
               <TableHead>
-                <TableRow><TableCell align="center" colSpan={6}>事件</TableCell></TableRow>
+                <TableRow><TableCell align="center" colSpan={6}>{i18nMsg('supportEvent')}</TableCell></TableRow>
                 <TableRow>
-                  {['事件名', 'Vocal', 'Dance', 'Visual', 'Mental', 'SP'].map(
+                  {['eventName', 'vocal', 'dance', 'visual', 'mental', 'sp'].map(i18nMsg).map(
                     (x, index) => <TableCell align="left" key={index}>{x}</TableCell>
                   )}
                 </TableRow>
@@ -324,7 +326,7 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
                 }
                 <TableRow key={'sumup'}>
                   {[
-                    '合计',
+                    i18nMsg('sumup'),
                     ...[
                       idol.eventsSum.vo,
                       idol.eventsSum.da,
@@ -341,7 +343,7 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
           <Hidden smUp>
             <Table padding={'checkbox'}>
               <TableHead>
-                <TableRow><TableCell align="center" colSpan={5}>事件</TableCell></TableRow>
+                <TableRow><TableCell align="center" colSpan={5}>{i18nMsg('supportEvent')}</TableCell></TableRow>
                 <TableRow>
                   {['Vo', 'Da', 'Vi', 'Me', 'SP'].map(
                     (x, index) => <TableCell key={index}>{x}</TableCell>
@@ -360,7 +362,7 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
                   </>
                 ))
                 }
-                <TableRow><TableCell align="center" colSpan={5}>合计</TableCell></TableRow>
+                <TableRow><TableCell align="center" colSpan={5}>{i18nMsg('sumup')}</TableCell></TableRow>
                 <TableRow key={'sumup'}>
                   {[
                       idol.eventsSum.vo,
@@ -383,11 +385,11 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
             <Table padding={'dense'}>
               <TableHead>
                 <TableRow><TableCell align="center" colSpan={2 + getSupportSkillLevels(idol.rarity).length}>
-                  支援技能 サポートスキル
+                  {i18nMsg('supportSkill')}
                 </TableCell></TableRow>
                 <TableRow>
-                  <TableCell align="left">技能</TableCell>
-                  <TableCell align="left">技能效果</TableCell>
+                  <TableCell align="left">{i18nMsg('skillName')}</TableCell>
+                  <TableCell align="left">{i18nMsg('skillEffect')}</TableCell>
                   {getSupportSkillLevels(idol.rarity).map((x, index) => (
                     <TableCell align="center" padding="none"
                       className={classes.tableBorder} key={index}>
@@ -417,11 +419,9 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
             <Table padding={'none'}>
               <TableHead>
                 <TableRow><TableCell align="center" colSpan={getSupportSkillLevels(idol.rarity).length}>
-                  支援技能 サポートスキル
+                {i18nMsg('supportSkill')}
                 </TableCell></TableRow>
                 <TableRow>
-                  {/* <TableCell align="left">技能</TableCell>
-                  <TableCell align="left">技能效果</TableCell> */}
                   {getSupportSkillLevels(idol.rarity).map((x, index) => (
                     <TableCell align='center' padding='none' key={index}>
                       {x}

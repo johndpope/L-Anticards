@@ -9,19 +9,9 @@ import Hidden from '@material-ui/core/Hidden';
 
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
+import { useAppData } from '../../context/AppData';
 
 const styles = (theme: Theme) => createStyles({
-  // tubaro: {
-  //   width: 728,
-  //   height: 410,
-  //   margin: '0 auto',
-  //   backgroundImage: `url(${haitaiImage})`,
-  //   backgroundSize: 'contain',
-  // },
-  // tubaroContent: {
-  //   padding: `${theme.spacing.unit * 8}px 0 ${theme.spacing.unit * 6}px`,
-  // },
-
   mainGrid: {
     marginTop: theme.spacing.unit * 3,
   },
@@ -51,44 +41,11 @@ const styles = (theme: Theme) => createStyles({
 interface Props extends WithStyles<typeof styles> {
 }
 
-const IntroPage = withStyles(styles)((props: Props) => {
+const IntroPageZH = withStyles(styles)((props: Props) => {
   const { classes } = props;
   return (
     <main>
-        {/* <div className={classes.tubaro}>
-          <div className={classes.tubaroContent}>
-            <Typography component="h1" variant="h2" align="center" style={{
-              color: '#A91727',
-              fontFamily: 'hkgokukaikk',
-              fontSize: 100,
-              textShadow: '0 0 30px #58211F',
-              opacity: 0.9,
-              margin: '70px',
-              // boxShadow: '0 0 10px 4px white',
-            }} gutterBottom>
-              流三
-            </Typography>
-            <Typography variant="h6" align="center" style={{
-              color: '#C9C9C9',
-              fontSize: 12,
-              margin: '-30px',
-              textShadow: '0 0 8px black',
-              WebkitTextStroke: '0.2px black',
-            }} paragraph>
-              <strong>你顶多就是个 P 吧。</strong>
-            </Typography>
-          </div>
-        </div> */}
         <Grid container spacing={40} className={classes.mainGrid}>
-            {/* <Hidden xsDown>
-              <Grid container justify={'center'}>
-                <img src={haitaiImage} alt={'ryu3'} style={{
-                  maxWidth: '80%',
-                  // height: 'auto',
-                  objectFit: 'none',
-                }}/>
-              </Grid>
-            </Hidden> */}
             <Hidden smUp>
               <Grid container justify={'center'}>
                 <Typography component="h1" variant="h5" color='inherit' noWrap>
@@ -111,7 +68,7 @@ const IntroPage = withStyles(styles)((props: Props) => {
                   <li>{'Bug 报告请尽量带上所用系统/浏览器/在什么情况下出现，或者在 github issue 中写以方便交流'}</li>
                 </ul>
               </Typography>
-              <Typography variant="h6" gutterBottom>
+              {/* <Typography variant="h6" gutterBottom>
                 更新日志
               </Typography>
               <Divider />
@@ -123,13 +80,13 @@ const IntroPage = withStyles(styles)((props: Props) => {
                   <li>2019-03-29，更新主页、技能效果染色、名词说明</li>
                   <li>2019-03-25，第一版 demo</li>
                 </ul>
-              </Typography>
+              </Typography> */}
               <Typography variant="h6" gutterBottom>
                 版权声明
               </Typography>
               <Divider />
               <Typography paragraph>
-                本网站的所有图片素材及数据版权均归 BANDAI NAMCO Entertainment Inc所有，不得用于任何商业活动。
+                本网站的所有图片素材及数据版权均归 BANDAI NAMCO Entertainment Inc. 所有，不得用于任何商业活动。
               </Typography>
             </Grid>
             {/* Sidebar */}
@@ -160,4 +117,49 @@ const IntroPage = withStyles(styles)((props: Props) => {
   )
 });
 
-export default withStyles(styles)(IntroPage);
+const IntroPageJA = withStyles(styles)((props: Props) => {
+  const { classes } = props;
+  return (
+    <main>
+        <Grid container spacing={40} className={classes.mainGrid}>
+            <Hidden smUp>
+              <Grid container justify={'center'}>
+                <Typography component="h1" variant="h5" color='inherit' noWrap>
+                  {'L\'Anticards'}
+                </Typography>
+              </Grid>
+            </Hidden>
+            {/* Main */}
+            <Grid item xs={12} md={8}>
+              <Typography variant="h6" gutterBottom>
+                当サイトについて
+              </Typography>
+              <Divider />
+              <Typography paragraph>
+                <ul>
+                  <li>当サイトは BANDAI NAMCO Entertainment Inc. が運営しているブラウザゲーム「アイドルマスターシャイニーカラーズ」の情報サイトです。</li>
+                  <li>当サイトで掲載している画像の著作権や肖像権等は、各権利所有者に帰属します。</li>
+                  <li>連絡、BUG 報告とか：
+                    <Link href='https://github.com/kannpro/L-Anticards/issues' target='_blank' rel="noopener">Github</Link>
+                    {'         '}
+                    <Link href='https://peing.net/zh-CN/yabukikanyan?event=0' target='_blank' rel="noopener">Peing</Link>
+                  </li>
+                </ul>
+              </Typography>
+            </Grid>
+          </Grid>
+    </main>
+  )
+});
+
+export default () => {
+  const { lang } = useAppData();
+  if (lang == 'zh') {
+    return (
+      <IntroPageZH />
+    );
+  }
+  return (
+    <IntroPageJA />
+  );
+}

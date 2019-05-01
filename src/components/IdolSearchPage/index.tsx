@@ -33,7 +33,6 @@ import { useAppData } from '../../context/AppData';
 import { IdolType, membersList, unitsList, strengthsList, liveSkillsList, passiveSkillList, getActiveSkills } from '../../common/type';
 import { IdolView } from '../../common/filter';
 import { useToggle } from '../../hooks/gadget';
-import { liveSkillText, passiveSkillText } from '../../common/text';
 import HintText from '../HintText';
 import LoadingProgress from '../LoadingProgress';
 
@@ -202,10 +201,9 @@ const Filter: React.FunctionComponent<Props> = (props) => {
   const [liveSkillSelectOpen, openLiveSkillSelect, closeLiveSkillSelect] = useToggle(false);
   const [passiveSkillSelectOpen, openPassiveSkillSelect, closePassiveSkillSelect] = useToggle(false);
   const appData = useAppData();
-  // const [age, setAge] = useState("age");
 
   const { classes, idolType } = props;
-  const { getFilter, setFilter, resetFilter } = appData;
+  const { getFilter, setFilter, resetFilter, i18nMsg, lang } = appData;
   const filter = getFilter(idolType);
   return (
     <>
@@ -273,9 +271,9 @@ const Filter: React.FunctionComponent<Props> = (props) => {
                 {['all', ...unitsList].map((v, index) => (<MenuItem value={v} key={index}> {v} </MenuItem>))}
               </Select>
             </FormControl>
-            <Button onClick={openLiveSkillSelect} className={classes.filters}>主动技能</Button>
-            <Button onClick={openPassiveSkillSelect} className={classes.filters}>被动技能</Button>
-            <Button onClick={() => resetFilter(idolType)} className={classes.filters}>重置</Button>
+            <Button onClick={openLiveSkillSelect} className={classes.filters}>{i18nMsg('activeSkill')}</Button>
+            <Button onClick={openPassiveSkillSelect} className={classes.filters}>{i18nMsg('passiveSkill')}</Button>
+            <Button onClick={() => resetFilter(idolType)} className={classes.filters}>{i18nMsg('reset')}</Button>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -287,7 +285,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
         open={liveSkillSelectOpen}
         onClose={closeLiveSkillSelect}
       >
-        <DialogTitle>主动技能</DialogTitle>
+        <DialogTitle>{i18nMsg('activeSkill')}</DialogTitle>
         <DialogContent>
           <RadioGroup
             value={filter.liveSkill}
@@ -298,7 +296,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
           >
             {['none', ...liveSkillsList].map((s, index) =>
               <FormControlLabel value={s} control={<Radio />} key={index}
-              label={liveSkillText(s as typeof filter.liveSkill)} />)
+              label={i18nMsg('skillType_' + s)} />)
             }
           </RadioGroup>
         </DialogContent>
@@ -314,7 +312,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
         open={passiveSkillSelectOpen}
         onClose={closePassiveSkillSelect}
       >
-        <DialogTitle>被动技能</DialogTitle>
+        <DialogTitle>{i18nMsg('passiveSkill')}</DialogTitle>
         <DialogContent>
           <RadioGroup
             value={filter.passiveSkill}
@@ -326,7 +324,7 @@ const Filter: React.FunctionComponent<Props> = (props) => {
           >
             {['none', ...passiveSkillList].map((s, index) =>
               <FormControlLabel value={s} control={<Radio />} key={index}
-              label={passiveSkillText(s as typeof filter.passiveSkill)} />)
+              label={i18nMsg('skillType_' + s)} />)
             }
           </RadioGroup>
         </DialogContent>

@@ -27,7 +27,7 @@ const skillEffectTextDict: { [key: string]: string } = {
   'reraise': '复活',
 }
 
-export const liveSkillText = (s: string) => {
+export const liveSkillText = (s: string, lang: string) => {
   if (s === 'none') {
     return '无限制';
   } else if (s in skillEffectTextDict) {
@@ -37,7 +37,7 @@ export const liveSkillText = (s: string) => {
   }
 }
 
-export const passiveSkillText = (s: string) => {
+export const passiveSkillText = (s: string, lang: string) => {
   if (s === 'none') {
     return '无限制';
   } else if (s in skillEffectTextDict) {
