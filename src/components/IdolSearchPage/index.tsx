@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useState } from 'react';
 
 import { createStyles, withStyles, WithStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -36,6 +35,7 @@ import { IdolView } from '../../common/filter';
 import { useToggle } from '../../hooks/gadget';
 import { liveSkillText, passiveSkillText } from '../../common/text';
 import HintText from '../HintText';
+import LoadingProgress from '../LoadingProgress';
 
 
 const styles = (theme: Theme) => createStyles({
@@ -339,10 +339,15 @@ const Filter: React.FunctionComponent<Props> = (props) => {
 }
 
 const IdolSearchPage: React.FunctionComponent<Props> = (props) => {
-  const appData = useAppData();
-
+  const { allIdols, getFilter } = useAppData();
   const { classes, idolType } = props;
-  const filter = appData.getFilter(idolType);
+  const filter = getFilter(idolType);
+
+  if (!allIdols || allIdols.p.length === 0) {
+    return (
+      <LoadingProgress />
+    )
+  }
   return (
     <div className={classes.root}>
       <Filter idolType={idolType} classes={classes} />

@@ -3,10 +3,12 @@ import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 
 import { CardActions, Theme } from '@material-ui/core';
 import { useAppData } from '../../context/AppData';
 import { IdolType } from '../../common/type';
+import { toIdol } from '../../common/route';
 
 function padLeft(text: string, padChar: string, size: number): string {
   return (String(padChar).repeat(size) + text).substr((size * -1), size);
@@ -33,14 +35,20 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const IdolAvatar: React.FunctionComponent<Props> = (props) => {
-    const { gotoIdolPage } = useAppData();
+    const { classes, idolID } = props
 
-    const { classes, idolID, idolType } = props
+    const AvatarCardMedia = withRouter(({ history }) => (
+      <CardMedia component="img" image={avatarUrl(idolID)} 
+        onClick={() => {
+          history.push(toIdol(idolID));
+        }}
+        src={toIdol(idolID)}
+      />
+    ))
     return (
       <Card className={classes.card} >
         <CardActionArea className={classes.cardActionArea}>
-          <CardMedia component="img" image={avatarUrl(idolID)} onClick={() => gotoIdolPage(idolType, idolID)}>
-          </CardMedia>
+          <AvatarCardMedia />
           <CardActions></CardActions>
         </CardActionArea>
         {/* <CardContent className={classes.idolStars}>

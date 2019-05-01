@@ -11,11 +11,13 @@ import Divider from '@material-ui/core/Divider';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import IdolAvatar from '../IdolAvatar';
 import { useAppData } from '../../context/AppData';
 import { IdolType, ProduceIdol, SupportIdol, Rarity, getActiveSkills, getPassiveSkills, getLimitBreakSkills } from '../../common/type';
 import { Theme } from '@material-ui/core';
+import LoadingProgress from '../LoadingProgress';
 
 import HintText from '../HintText';
 
@@ -453,24 +455,35 @@ const SupportIdolPage: React.FC<Props & { idol: SupportIdol }> = (props) => {
   )
 }
 
-const IdolPage: React.FunctionComponent<Props> = (props) => {
-  const { currentIdolType, currentIdolID, allIdols, mainScrollToTop } = useAppData();
+const IdolPage: React.FunctionComponent<Props & {
+  idolID: number,
+}> = (props) => {
+  const { allIdols, mainScrollToTop } = useAppData();
   React.useEffect(() => {
     mainScrollToTop();
   });
 
-  const { classes } = props;
-  if (currentIdolType == IdolType.support) {
-    const idol = allIdols.s.find(x => x.id == currentIdolID) || allIdols.s[0];
+  const { classes, idolID } = props;
+  if (!allIdols || allIdols.p.length === 0) {
     return (
-      <SupportIdolPage idol={idol} classes={classes} />
-    )
-  } else {
-    const idol = allIdols.p.find(x => x.id == currentIdolID) || allIdols.p[0];
-    return (
-      <ProduceIdolPage idol={idol} classes={classes} />
+      <LoadingProgress />
     )
   }
+  let sIdol = allIdols.s.find(x => x.id == idolID);
+  if (sIdol) {
+    return (
+      <SupportIdolPage idol={sIdol} classes={classes} />
+    )
+  }
+  let pIdol = allIdols.p.find(x => x.id == idolID);
+  if (pIdol) {
+    return (
+      <ProduceIdolPage idol={pIdol} classes={classes} />
+    )
+  }
+  return (
+    <p>No such Idol with id {idolID}</p>
+  )
 }
 
 export default withStyles(styles)(IdolPage);

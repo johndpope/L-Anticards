@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { useState } from 'react';
 
 import { MuiThemeProvider, withStyles, createStyles, createMuiTheme, Theme, WithStyles } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link as RouterLink, withRouter } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -33,6 +32,7 @@ import { IdolType } from './common/type';
 import { GlobalTabs } from './common/filter';
 import IntroPage from './components/IntroPage';
 import IdolStatistics from './components/IdolStatistics';
+import { toIntro, toProduce, toSupport } from './common/route';
 
 var classNames = require('classnames');
 
@@ -136,10 +136,22 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
-  const { tab, setTab } = useAppData();
   const [teamDrawerOpen, OpenTeamDrawer, CloseTeamDrawer] = useToggle(false);
-
   const { classes } = props;
+
+  const TabList = withRouter(({ location }) => (
+    <Tabs value={location.pathname} >
+    <Tab label="Produce" value='/produce' 
+      component={(props) => <RouterLink to={toProduce} {...props}/>} 
+    />
+    <Tab label="Support" value='/support'
+      component={(props) => <RouterLink to={toSupport} {...props}/>}
+    />
+    {/* <Tab label="Idol" component={(props) => <RouterLink to={toIdol()} {...props}/>}/> */}
+    {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
+  </Tabs>
+  ));
+
   return (
     <AppBar position="absolute"
       className={classNames(classes.appBar, teamDrawerOpen && classes.appBarShift)}
@@ -155,13 +167,13 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
           </IconButton> */}
         <div className={classes.menuButton}>
           <Hidden smUp>
-            <IconButton color="inherit" onClick={() => setTab(GlobalTabs.intro)}>
+            <IconButton color="inherit" component={(props) => <RouterLink to={toIntro} {...props}/>}>
               <Home />
             </IconButton>
           </Hidden>
         </div>
         <Hidden xsDown>
-          <Link onClick={() => setTab(GlobalTabs.intro)} color='inherit'>
+          <Link color='inherit' component={(props) => <RouterLink to={toIntro} {...props}/>}>
             <Typography component="h1" variant="h5" color='inherit' noWrap>
               {'L\'Anticards'}
             </Typography>
@@ -172,12 +184,7 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
         <Typography component="h1" variant="h5" color='inherit' noWrap className={classes.title}>
         </Typography>
         <Typography color="inherit" className={classes.typeTab}>
-          <Tabs value={tab} onChange={(_, value: string) => setTab(value)}>
-            <Tab label="Produce" value={GlobalTabs.produce} />
-            <Tab label="Support" value={GlobalTabs.support} />
-            <Tab label="Idol" value={GlobalTabs.idol} />
-            {/* TODO: <Tab label="Team" value={GlobalTabs.team} /> */}
-          </Tabs>
+          <TabList />
         </Typography>
         <Hidden xsDown>
           <IconButton color="inherit" href='https://github.com/kannpro/L-Anticards' target='_blank' rel="noopener">
@@ -207,24 +214,17 @@ const AppBarWithTeamInfo = withStyles(styles)((props: Props) => {
 });
 
 const ContentContainer = withStyles(styles)((props: Props) => {
-  const { tab } = useAppData();
   return (
     <div>
-      {tab === 'intro' &&
-        <IntroPage />
-      }
-      {tab === 'support' &&
-        <IdolSearchPage idolType={IdolType.support} />
-      }
-      {tab === 'produce' &&
-        <IdolSearchPage idolType={IdolType.produce} />
-      }
-      {tab === 'idol' &&
-        <IdolPage />
-      }
-      {tab === 'team' &&
+      
+      <Route path={toIntro} exact component={IntroPage} />
+      <Route path={toProduce} component={() => <IdolSearchPage idolType={IdolType.produce}/>} />
+      <Route path={toSupport} component={() => <IdolSearchPage idolType={IdolType.support}/>} />
+      <Route path='/idol/:idolID' render={(props) => <IdolPage idolID={props.match.params.idolID} />}/>
+      <Route path='/statistics' component={IdolStatistics} />
+      {/* {tab === 'team' &&
         <div>Type: team</div>
-      }
+      } */}
     </div>
   )
 });
@@ -250,17 +250,10 @@ const App = withStyles(styles)((props: Props) => {
   );
 });
 
-const AppContainer = () => {
-  return (
+export default () => (
+  <Router>
     <MuiThemeProvider theme={anticaTheme}>
       <App />
     </MuiThemeProvider>
-  )
-}
-
-export default () => (
-  <Router>
-    <Route path = '/' exact component={AppContainer} />
-    <Route path = '/statistics/' component={IdolStatistics} />
   </Router>
 );
