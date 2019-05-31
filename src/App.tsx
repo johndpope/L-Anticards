@@ -257,7 +257,8 @@ const ContentContainer = withStyles(styles)((props: Props) => {
 });
 
 const App = withStyles(styles)((props: Props) => {
-  const mainRef: React.RefObject<HTMLMainElement> = React.createRef<HTMLMainElement>();
+  // 20190531: walkaround, HTMLMainElement can not be found
+  const mainRef: React.RefObject<HTMLDivElement> = React.createRef<HTMLDivElement>();
   const mainScrollToTop = () => {
     if (mainRef.current != null) { mainRef.current.scrollTo(0, 0); }
   };
