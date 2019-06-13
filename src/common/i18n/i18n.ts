@@ -25,22 +25,22 @@ export const getDefaultLanguage = () => {
   return toSupportedLanguage(lang);
 }
 
-export default class i18n {
+export default class I18n {
   private lang: string;
 
   constructor(lang: string) {
     this.lang = lang;
   }
 
-  setLanguage(lang: string) {
+  public setLanguage(lang: string) {
     this.lang = lang;
   }
 
-  msg(key: string) {
+  public msg(key: string) {
     if (messages[key]) {
       return messages[key][this.lang] || key;
     } else {
       return key;
     }
   }
-};
+}

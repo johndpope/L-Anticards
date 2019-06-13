@@ -1,9 +1,0 @@
-version: "2"
-services:
-  l-anticards:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    ports:
-      - 28302:80
-

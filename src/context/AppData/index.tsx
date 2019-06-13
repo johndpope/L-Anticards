@@ -28,7 +28,7 @@ const appDataOperator = {
   resetFilter: (typ: IdolType) => { },
   mainScrollToTop: () => {},
   setLang: (lang: string) => {},
-  i18nMsg: (key: string) => "",
+  i18nMsg: (key: string) => '',
 }
 
 const AppDataContext = React.createContext(appDataOperator);
