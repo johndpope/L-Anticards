@@ -15,7 +15,7 @@ function padLeft(text: string, padChar: string, size: number): string {
 }
 
 function avatarUrl(idolID: number): string {
-  return process.env.PUBLIC_URL + '/image/mini/i' + padLeft(idolID.toString(), '0', 4) + '.jpg'
+  return process.env.PUBLIC_URL + '/image/webp/' + padLeft(idolID.toString(), '0', 4) + '.webp'
 }
 
 const styles = (theme: Theme) => createStyles({
